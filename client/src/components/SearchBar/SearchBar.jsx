@@ -38,7 +38,7 @@ export default function SearchBar({ addToQueue }) {
 
   return (
     <Container>
-      <SelectSearch options={songs} search onChange={searchChange} placeholder="Choose a song..." />
+      <SelectSearch options={songs} search={true} onChange={searchChange} placeholder="Choose a song..." />
       {/* <SelectSearch /> */}
       {/* <form onSubmit={searchSubmit}>
         <input type="text" value={searchEntry} onChange={searchChange} placeholder="Search for a song..." name="search" required />
