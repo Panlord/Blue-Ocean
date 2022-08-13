@@ -55,7 +55,7 @@ An Teddy (Product Manager, Full Stack Software Engineer)
 Camden Smith (Architecture Owner, Full Stack Software Engineer)
 
 [![Linkedin: LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white&link=https://www.linkedin.com/in/caleb-kim0510/)](https://www.linkedin.com/in/camdensmithh/)
-[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/cariboukim)](https://github.com/CamdenSmithh/Pomodoro) 
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/cariboukim)](https://github.com/CamdenSmithh) 
 
 Frederick Pascua (Architecture Owner, Full Stack Software Engineer)
 
