@@ -31,6 +31,7 @@
     "mongoose": "^6.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-select-search": "^3.0.10",
     "styled-components": "^5.3.5",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
