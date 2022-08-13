@@ -171,7 +171,7 @@ References:
 
 
 
-# Instructions for how to deploy the webpage:
+# Instructions for how to deploy the Application:
 
 (insert instructions here)
 
