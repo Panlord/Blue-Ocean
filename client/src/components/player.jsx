@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const track = {
     name: "",
@@ -20,6 +21,7 @@ function WebPlayback(props) {
     const [current_track, setTrack] = useState(track);
 
     useEffect(() => {
+        var dev_id;
 
         const script = document.createElement("script");
         script.src = "https://sdk.scdn.co/spotify-player.js";
@@ -36,13 +38,19 @@ function WebPlayback(props) {
             });
 
             setPlayer(player);
-
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
+                axios.put('https://api.spotify.com/v1/me/player', {'device_ids': [`${device_id}`], play: true},
+                {headers: {Authorization: `Bearer ${props.token}`}})
+                .then((res)=> console.log(res))
+                .catch((err) => console.log(err))
             });
 
             player.addListener('not_ready', ({ device_id }) => {
+
+
                 console.log('Device ID has gone offline', device_id);
+
             });
 
             player.addListener('player_state_changed', ( state => {
@@ -62,8 +70,12 @@ function WebPlayback(props) {
 
             player.connect();
 
+
+
         };
     }, []);
+
+
 
     if (!is_active) {
         return (
