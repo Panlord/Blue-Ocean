@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import SearchBar from './SearchBar/SearchBar.jsx';
+import SongContext from '../context/SongContext.js';
 
 export default function App() {
+
+  const [songs, setSongs] = useState([]);
+
+  const providerSongValue = useMemo(() => ({ songs, setSongs }), [songs, setSongs]);
+
   return (
-    <div>
+    <SongContext.Provider value={providerSongValue}>
       <SearchBar />
-    </div>
+    </SongContext.Provider>
   );
 }

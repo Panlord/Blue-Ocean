@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect  } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import SongContext from '../../context/SongContext';
 
 const Container = styled.div`
   display: flex;
@@ -71,18 +72,22 @@ const List = styled.li`
   }
 `;
 
-export default function SearchBar({ addToQueue }) {
+export default function SearchBar() {
   const [searchEntry, setSearchEntry] = useState('');
-  const [songs, setSongs] = useState([]);
+  const { songs, setSongs } = useContext(SongContext);
+
+  const searchChange = (e) => {
+    setSearchEntry(e.target.value);
+  }
+
 
   const searchSubmit = (e) => {
     e.preventDefault();
-    const searchValue = e.target.search.value;
     const options = {
       url: 'https://api.spotify.com/v1/search',
       headers: { Authorization: `Bearer ${process.env.TOKEN}` },
       params: {
-        q: searchValue,
+        q: searchEntry,
         type: 'track',
         market: 'US',
         limit: 5,
@@ -90,6 +95,7 @@ export default function SearchBar({ addToQueue }) {
     };
     axios(options)
       .then((response) => {
+        console.log(response.data.tracks.items)
         setSongs(response.data.tracks.items);
       })
       .catch((err) => console.log(err));
@@ -101,9 +107,9 @@ export default function SearchBar({ addToQueue }) {
 
   return (
     <Container>
-      <SearchForm onSubmit={(e) => { searchSubmit(e); }}>
+      <SearchForm onChange={(e) => { searchChange(e); }}>
         <Input type="text" name="search" placeholder="Choose a song..." />
-        <SearchIcon>
+        <SearchIcon onClick={e => { searchSubmit(e); }}>
           <i className="fa fa-search" />
         </SearchIcon>
         <SearchResult>
@@ -556,3 +562,4 @@ export default function SearchBar({ addToQueue }) {
     "total": 10061
 }
  */
+
