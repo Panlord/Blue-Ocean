@@ -67,6 +67,7 @@ const List = styled.li`
   &:hover {
     color: #FFF;
     background-color: #1F7A8C;
+    cursor: pointer;
   }
 `;
 
@@ -79,7 +80,7 @@ export default function SearchBar({ addToQueue }) {
     const searchValue = e.target.search.value;
     const options = {
       url: 'https://api.spotify.com/v1/search',
-      headers: { Authorization: 'Bearer BQAErAW2mrpmNOELjo1ff5rWE8QKV2Zzb0wTIjw8dsIcg_qB7X9VTkbLyN9z3ixYpXe6Ix7onziH1fgnZluQFcJ4HnaIeTwiencu-D0xYnR1CB8TemkYQ9khgnDi7zJGBagz8co2jUjEgo6mNCIj535eEGQ8faP6eeDwiyvPZHE' },
+      headers: { Authorization: `Bearer ${process.env.TOKEN}` },
       params: {
         q: searchValue,
         type: 'track',
