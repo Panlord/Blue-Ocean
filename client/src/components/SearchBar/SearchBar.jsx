@@ -6,14 +6,12 @@ export default function SearchBar({ setQueue }) {
   const [searchEntry, setSearchEntry] = useState('');
   const [songs, setSongs] = useState([]);
 
-  const searchSubmit = (e) => {
-    e.preventDefault();
-    const searchValue = e.target.search.value;
+  useEffect(() => {
     const options = {
       url: 'https://api.spotify.com/v1/search',
       headers: { Authorization: process.env.TOKEN },
       params: {
-        q: searchValue,
+        q: searchEntry,
         type: 'track',
         market: 'US',
         limit: 5,
@@ -21,9 +19,14 @@ export default function SearchBar({ setQueue }) {
     };
     axios(options)
       .then((response) => {
-        setSongs(response.data.tracks.items);
+        if (searchEntry.length > 1) setSongs(response.data.tracks.items);
+        else setSongs([]);
       })
       .catch((err) => console.log(err));
+  }, [searchEntry]);
+
+  const searchChange = (e) => {
+    setSearchEntry(e.target.value);
   };
 
   const addToQueue = (e, song) => {
@@ -36,14 +39,10 @@ export default function SearchBar({ setQueue }) {
     }]);
   };
 
-  useEffect(() => {
-
-  }, [songs]);
-
   return (
     <Container>
-      <SearchForm onSubmit={(e) => { searchSubmit(e); }}>
-        <Input type="text" name="search" placeholder="Choose a song..." />
+      <SearchForm>
+        <Input type="text" name="search" placeholder="Choose a song..." value={searchEntry} onChange={searchChange} />
         <SearchIcon>
           <i className="fa fa-search" />
         </SearchIcon>
