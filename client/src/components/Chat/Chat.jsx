@@ -10,9 +10,20 @@ export default function Chat(props) {
   const [lastPong, setLastPong] = useState(null);
   const [message, setMessage] = useState('');
   const [listOfMessages, setListOfMessages] = useState([]);
+  const [name, setName] = useState('');
+
+  //need something to get userName from token data
+  useEffect( () => {
+    if (props.token !== null) {
+      console.log(props.token);
+      setName(props.token);
+      socket.emit('new-user', name);
+    }
+
+  },[name])
+
 
   useEffect(() => {
-    console.log('AHHHH');
     socket.on('connect', () => {
       setIsConnected(true);
       console.log('CONNECTED');
@@ -27,8 +38,16 @@ export default function Chat(props) {
     });
 
     socket.on('chat message', (msg) => {
-      setListOfMessages([...listOfMessages, msg]);
+      let message = `${msg.name} :${msg.msg}`;
+      setListOfMessages([...listOfMessages, message]);
     });
+
+    socket.on('user-connected', name => {
+      if (name !== '') {
+        let msg = `${name} is connceted`
+        setListOfMessages([...listOfMessages, msg])
+      }
+    })
 
     return () => {
       socket.off('connect');
