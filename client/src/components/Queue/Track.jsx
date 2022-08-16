@@ -8,7 +8,7 @@ export default function Track ({ track }) {
   return (
     <div>
       <SongContainer>
-        <img src={track.imgUrl}></img>
+        <SongImage src={track.imageUrl}></SongImage>
         <InnerContainer>
           <ArtistName>{track.artist}</ArtistName>
           <SongName>{track.name}</SongName>
@@ -19,6 +19,28 @@ export default function Track ({ track }) {
     </div>
   )
 }
+
+const SongContainer = styled.div`
+border: 1px solid;
+border-radius: 10px;
+display: flex;
+margin-bottom: 10px;
+`
+
+const InnerContainer = styled.div`
+margin-top: 10px;
+`
+const ArtistName = styled.div`
+
+`
+const SongName = styled.div`
+
+`
+const SongImage = styled.img`
+height: 60px;
+width: 60px;
+margin: 10px;
+`
 
 const ThumbsUp = styled(FaThumbsUp)`
 height: 20px;
