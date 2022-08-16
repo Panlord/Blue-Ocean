@@ -34,9 +34,9 @@ export default function App() {
 
   return (
     <div>
-      < SearchBar setQueue={setQueue} />
+      {/* < SearchBar setQueue={setQueue} />
       Hello Sonar!
-      <Landing setUsername={setUsername} />
+      <Landing setUsername={setUsername} /> */}
       <div >
         <Queue songList={songList} />
       </div>
