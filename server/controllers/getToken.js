@@ -2,6 +2,8 @@ var models = require('./../models')
 
 module.exports = {
   get : (req, res) => {
+    console.log(req.authCode)
+    console.log('lit',req, 'getToken callback request');
     console.log(global.access_token, 'global')
       if (!global.access_token) {
         console.log("no token to give the user");

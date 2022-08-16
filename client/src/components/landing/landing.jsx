@@ -3,7 +3,7 @@ import Player from '../player.jsx';
 import Login from './login.jsx';
 import '../App.css';
 
-function Landing() {
+function Landing({setUsername}) {
   const [token, setToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
 
@@ -23,7 +23,7 @@ function Landing() {
 
   return (
     <>
-      { (token === '') ? <Login/> : <Player token={token} refreshToken={refreshToken}/>}
+      { (token === '') ? <Login/> : <Player token={token} refreshToken={refreshToken} setUsername={setUsername}/>}
     </>
   )
 }

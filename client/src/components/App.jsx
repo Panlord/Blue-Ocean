@@ -4,12 +4,13 @@ import Landing from './landing/landing.jsx';
 
 export default function App() {
   const [queue, setQueue] = useState([]);
+  const [username, setUsername] = useState(null);
 
   return (
     <div>
       <SearchBar setQueue={setQueue} />
       Hello Sonar!
-      <Landing />
+      <Landing setUsername={setUsername}/>
     </div>
   );
 }

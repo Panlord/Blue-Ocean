@@ -21,6 +21,7 @@ function WebPlayback(props) {
     const [current_track, setTrack] = useState(track);
     const [client_id, setClient_id] = useState('');
 
+
     useEffect(() => {
         var dev_id;
 
@@ -50,7 +51,9 @@ function WebPlayback(props) {
                 wrapperFunction()})
                 }
                 wrapperFunction();
-
+                axios.get('https://api.spotify.com/v1/me',  {headers: {Authorization: `Bearer ${props.token}`}})
+                .then((res) => {props.setUsername({username: res.data.id})})
+                .catch((err) => console.log(err))
             });
 
 
