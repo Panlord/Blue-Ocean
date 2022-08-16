@@ -7,8 +7,6 @@ export default function Chat (props) => {
   const [message, setMessage] = useState('');
 
   return (
-    <div>
-
-    </div>
+    <div></div>
   );
 };
