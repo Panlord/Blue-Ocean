@@ -11,9 +11,11 @@ function Landing() {
     async function getToken() {
       const response = await fetch('http://localhost:3001/auth/token');
       const json = await response.json();
-
-      setToken(json.access_token);
-      setRefreshToken(json.refresh_token)
+      if (json.access_token && json.refresh_token) {
+        console.log('inside')
+       setToken(json.access_token);
+       setRefreshToken(json.refresh_token)
+      }
     }
 
     getToken();
