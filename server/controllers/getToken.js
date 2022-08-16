@@ -9,9 +9,11 @@ module.exports = {
         console.log(access_token, 'access')
         res.json(
           {
-             access_token: global.access_token
+             access_token: global.access_token,
+             refresh_token: global.refresh_token
           })
           global.access_token = '';
+          global.refresh_token = '';
       }
   }
 }
