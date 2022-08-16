@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Player from '../player.jsx';
 import Login from './login.jsx';
+import Room from './Room.jsx';
 import '../App.css';
 
-function Landing({setUsername}) {
+function Landing({ setUsername }) {
   const [token, setToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
 
@@ -12,9 +13,9 @@ function Landing({setUsername}) {
       const response = await fetch('http://localhost:3001/auth/token');
       const json = await response.json();
       if (json.access_token && json.refresh_token) {
-        console.log('inside')
-       setToken(json.access_token);
-       setRefreshToken(json.refresh_token)
+        console.log('inside');
+        setToken(json.access_token);
+        setRefreshToken(json.refresh_token);
       }
     }
 
@@ -23,9 +24,9 @@ function Landing({setUsername}) {
 
   return (
     <>
-      { (token === '') ? <Login/> : <Player token={token} refreshToken={refreshToken} setUsername={setUsername}/>}
+      { (token === '') ? <Login/> : <Room token={token} refreshToken={refreshToken} setUsername={setUsername} />}
     </>
-  )
+  );
 }
 
 export default Landing;
