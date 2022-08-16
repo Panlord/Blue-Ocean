@@ -6,8 +6,8 @@ const app = express();
 const http = require('http');
 const { Server } = require('socket.io');
 
-const server = http.createServer(app);
-const io = new Server(server);
+// const server = http.createServer(app);
+// const io = new Server(server);
 
 const routes = require('./routes');
 
@@ -18,6 +18,13 @@ app.use('/', routes);
 
 
 
-app.listen(3001, () => {
+// app.listen(3001, () => {
+//   console.log('Server is running at port 3001');
+// });
+
+const server = app.listen(3001, () => {
   console.log('Server is running at port 3001');
 });
+
+const io = require('socket.io')(server);
+app.set('socketio', io);
