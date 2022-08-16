@@ -2,6 +2,59 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
+export default function SearchBar({ setQueue }) {
+  const [searchEntry, setSearchEntry] = useState('');
+  const [songs, setSongs] = useState([]);
+
+  const searchSubmit = (e) => {
+    e.preventDefault();
+    const searchValue = e.target.search.value;
+    const options = {
+      url: 'https://api.spotify.com/v1/search',
+      headers: { Authorization: process.env.TOKEN },
+      params: {
+        q: searchValue,
+        type: 'track',
+        market: 'US',
+        limit: 5,
+      },
+    };
+    axios(options)
+      .then((response) => {
+        setSongs(response.data.tracks.items);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const addToQueue = (e, song) => {
+    e.preventDefault();
+    setQueue((prev) => [...prev, {
+      name: song.name,
+      artist: song.album.artists[0].name,
+      imageURL: song.album.images[0].url,
+      uri: song.uri,
+    }]);
+  };
+
+  useEffect(() => {
+
+  }, [songs]);
+
+  return (
+    <Container>
+      <SearchForm onSubmit={(e) => { searchSubmit(e); }}>
+        <Input type="text" name="search" placeholder="Choose a song..." />
+        <SearchIcon>
+          <i className="fa fa-search" />
+        </SearchIcon>
+        <SearchResult>
+          {songs.map((song) => <List type="button" onClick={(e) => { addToQueue(e, song); }} key={song.id}>{song.name}</List>)}
+        </SearchResult>
+      </SearchForm>
+    </Container>
+  );
+}
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -70,59 +123,6 @@ const List = styled.li`
     cursor: pointer;
   }
 `;
-
-export default function SearchBar({ setQueue }) {
-  const [searchEntry, setSearchEntry] = useState('');
-  const [songs, setSongs] = useState([]);
-
-  const searchSubmit = (e) => {
-    e.preventDefault();
-    const searchValue = e.target.search.value;
-    const options = {
-      url: 'https://api.spotify.com/v1/search',
-      headers: { Authorization: process.env.TOKEN },
-      params: {
-        q: searchValue,
-        type: 'track',
-        market: 'US',
-        limit: 5,
-      },
-    };
-    axios(options)
-      .then((response) => {
-        setSongs(response.data.tracks.items);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const addToQueue = (e, song) => {
-    e.preventDefault();
-    setQueue((prev) => [...prev, {
-      name: song.name,
-      artist: song.album.artists[0].name,
-      imageURL: song.album.images[0].url,
-      uri: song.uri,
-    }]);
-  };
-
-  useEffect(() => {
-
-  }, [songs]);
-
-  return (
-    <Container>
-      <SearchForm onSubmit={(e) => { searchSubmit(e); }}>
-        <Input type="text" name="search" placeholder="Choose a song..." />
-        <SearchIcon>
-          <i className="fa fa-search" />
-        </SearchIcon>
-        <SearchResult>
-          {songs.map((song) => <List type="button" onClick={(e) => { addToQueue(e, song); }} key={song.id}>{song.name}</List>)}
-        </SearchResult>
-      </SearchForm>
-    </Container>
-  );
-}
 
 /**
  * {
