@@ -1,18 +1,15 @@
-import React, { useState, useMemo } from 'react';
-import Landing from './landing/landing.jsx'
+import React, { useState } from 'react';
 import SearchBar from './SearchBar/SearchBar.jsx';
-import SongContext from '../context/SongContext.js';
+import Landing from './landing/landing.jsx';
 
 export default function App() {
-
-  const [songs, setSongs] = useState([]);
-
-  const providerSongValue = useMemo(() => ({ songs, setSongs }), [songs, setSongs]);
+  const [queue, setQueue] = useState([]);
 
   return (
     <div>
+      <SearchBar setQueue={setQueue} />
       Hello Sonar!
-      <Landing/>
+      <Landing />
     </div>
   );
 }

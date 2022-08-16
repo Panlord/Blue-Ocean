@@ -11,7 +11,7 @@ const track = {
     artists: [
         { name: "" }
     ]
-}
+};
 
 function WebPlayback(props) {
 
