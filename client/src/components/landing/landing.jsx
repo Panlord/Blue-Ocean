@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Player from '../player.jsx';
 import Login from './login.jsx';
 import Room from './Room.jsx';
 import '../App.css';

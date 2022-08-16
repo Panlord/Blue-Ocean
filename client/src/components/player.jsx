@@ -41,7 +41,7 @@ function WebPlayback(props) {
         console.log('Ready with Device ID', device_id);
         setClient_id({ device_id });
         let wrapperFunction = () => {
-          axios.put('https://api.spotify.com/v1/me/player', {'device_ids': [`${device_id}`], play: true},
+          axios.put('https://api.spotify.com/v1/me/player', {'device_ids': [`${device_id}`], play: true },
             {headers: {Authorization: `Bearer ${props.token}`}})
             .then((res)=> console.log(res))
             .catch((err) => {console.log(err);
@@ -77,37 +77,32 @@ function WebPlayback(props) {
   if (!is_active) {
     return (
       <div className="container">
-          <div className="main-wrapper">
-              <b> Loading.... </b>
-          </div>
-      </div>);
-  } else {
-    return (
-            <div className="container">
-                    <div className="main-wrapper">
-
-                        <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
-
-                        <div className="now-playing__side">
-                            <div className="now-playing__name">{current_track.name}</div>
-                            <div className="now-playing__artist">{current_track.artists[0].name}</div>
-
-                            <button className="btn-spotify" onClick={() => { player.previousTrack(); }} >
-                                &lt;&lt;
-                            </button>
-
-                            <button className="btn-spotify" onClick={() => { player.togglePlay(); }} >
-                                { is_paused ? 'PLAY' : 'PAUSE' }
-                            </button>
-
-                            <button className="btn-spotify" onClick={() => { player.nextTrack(); }} >
-                                &gt;&gt;
-                            </button>
-                        </div>
-                    </div>
-            </div>
+        <div className="main-wrapper">
+          <b> Loading.... </b>
+        </div>
+      </div>
     );
   }
+  return (
+    <div className="container">
+      <div className="main-wrapper">
+        <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
+        <div className="now-playing__side">
+          <div className="now-playing__name">{current_track.name}</div>
+          <div className="now-playing__artist">{current_track.artists[0].name}</div>
+          <button className="btn-spotify" type="button" onClick={() => { player.previousTrack(); }}>
+            &lt;&lt;
+          </button>
+          <button className="btn-spotify" type="button" onClick={() => { player.togglePlay(); }}>
+            { is_paused ? 'PLAY' : 'PAUSE' }
+          </button>
+          <button className="btn-spotify" type="button" onClick={() => { player.nextTrack(); }}>
+            &gt;&gt;
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default WebPlayback;
