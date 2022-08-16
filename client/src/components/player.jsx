@@ -19,7 +19,7 @@ function WebPlayback(props) {
     const [is_active, setActive] = useState(false);
     const [player, setPlayer] = useState(undefined);
     const [current_track, setTrack] = useState(track);
-    const [client_id, setClient_id] = useState('');
+    const [device_id, setDevice_id] = useState('');
 
 
     useEffect(() => {
@@ -42,7 +42,8 @@ function WebPlayback(props) {
             setPlayer(player);
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
-                setClient_id({ device_id })
+                props.setDevice_id({ device_id })
+                setDevice_id({ device_id })
                 let wrapperFunction = () => {
                    axios.put('https://api.spotify.com/v1/me/player', {'device_ids': [`${device_id}`], play: true},
                 {headers: {Authorization: `Bearer ${props.token}`}})

@@ -3,13 +3,13 @@ import Player from '../player.jsx';
 import Login from './login.jsx';
 import '../App.css';
 
-function Landing({setUsername}) {
+function Landing({setUsername, setDevice_id}) {
   const [token, setToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
 
   useEffect(() => {
     async function getToken() {
-      const response = await fetch('http://localhost:3001/auth/token');
+      const response = await fetch(`http://localhost:3001/auth/token?authCode=${window.location.href.slice(window.location.href.indexOf("=")+1, window.location.href.length)}`);
       const json = await response.json();
       if (json.access_token && json.refresh_token) {
         console.log('inside')
@@ -23,7 +23,7 @@ function Landing({setUsername}) {
 
   return (
     <>
-      { (token === '') ? <Login/> : <Player token={token} refreshToken={refreshToken} setUsername={setUsername}/>}
+      { (token === '') ? <Login/> : <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id}/>}
     </>
   )
 }
