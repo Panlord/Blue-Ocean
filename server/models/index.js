@@ -1,0 +1,1 @@
+exports.authenticationCallback = require ('./authenticationCallback.js');
