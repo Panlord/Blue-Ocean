@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Player from '../player.jsx';
+//import Chat from '../Chat/Chat.jsx';
 import Login from './login.jsx';
 import '../App.css';
 
@@ -18,7 +19,7 @@ function Landing() {
 
   return (
     <>
-      { (token === '') ? <Login/> : <Player token={token} />}
+      { (token === '') ? <Login/> : <Player token={token} /> }
     </>
   )
 }
