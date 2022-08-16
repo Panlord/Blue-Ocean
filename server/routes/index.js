@@ -9,3 +9,4 @@ router.get('/auth/callback', controller.authenticationCallback.get);
 router.get('/auth/token', controller.getToken.get);
 
 module.exports = router;
+

@@ -28,3 +28,11 @@ const server = app.listen(3001, () => {
 
 const io = require('socket.io')(server);
 app.set('socketio', io);
+
+io.on('connection', (socket) => {
+  console.log('a user connected:', socket.id);
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
