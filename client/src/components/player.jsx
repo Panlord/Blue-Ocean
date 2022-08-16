@@ -19,6 +19,7 @@ function WebPlayback(props) {
     const [is_active, setActive] = useState(false);
     const [player, setPlayer] = useState(undefined);
     const [current_track, setTrack] = useState(track);
+    const [client_id, setClient_id] = useState('');
 
     useEffect(() => {
         var dev_id;
@@ -40,11 +41,19 @@ function WebPlayback(props) {
             setPlayer(player);
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
-                axios.put('https://api.spotify.com/v1/me/player', {'device_ids': [`${device_id}`], play: true},
+                setClient_id({ device_id })
+                let wrapperFunction = () => {
+                   axios.put('https://api.spotify.com/v1/me/player', {'device_ids': [`${device_id}`], play: true},
                 {headers: {Authorization: `Bearer ${props.token}`}})
                 .then((res)=> console.log(res))
-                .catch((err) => console.log(err))
+                .catch((err) => {console.log(err)
+                wrapperFunction()})
+                }
+                wrapperFunction();
+
             });
+
+
 
             player.addListener('not_ready', ({ device_id }) => {
 
@@ -82,7 +91,7 @@ function WebPlayback(props) {
             <>
                 <div className="container">
                     <div className="main-wrapper">
-                        <b> Instance not active. Transfer your playback using your Spotify app </b>
+                        <b> Loading.... </b>
                     </div>
                 </div>
             </>)

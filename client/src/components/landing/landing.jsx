@@ -5,12 +5,17 @@ import '../App.css';
 
 function Landing() {
   const [token, setToken] = useState('');
+  const [refreshToken, setRefreshToken] = useState('');
 
   useEffect(() => {
     async function getToken() {
       const response = await fetch('http://localhost:3001/auth/token');
       const json = await response.json();
-      setToken(json.access_token);
+      if (json.access_token && json.refresh_token) {
+        console.log('inside')
+       setToken(json.access_token);
+       setRefreshToken(json.refresh_token)
+      }
     }
 
     getToken();
@@ -18,7 +23,7 @@ function Landing() {
 
   return (
     <>
-      { (token === '') ? <Login/> : <Player token={token} />}
+      { (token === '') ? <Login/> : <Player token={token} refreshToken={refreshToken}/>}
     </>
   )
 }
