@@ -16,6 +16,7 @@ const server = app.listen(3001, () => {
   console.log('Server is running at port 3001');
 });
 const io = require('socket.io')(server);
+
 const user = {};
 app.set('socketio', io);
 
@@ -24,15 +25,15 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', (msg) => {
     console.log(`${msg} from ${socket.id}`);
-    io.emit('chat message', {name:user[socket.id], msg:msg});
-    //io.emit('chat message', msg);
+    io.emit('chat message', { name: user[socket.id], msg });
+    // io.emit('chat message', msg);
   });
 
-  socket.on('new-user', name => {
-    user[socket.id] = name
-    console.log('this is the name', name)
-    io.emit('user-connected', name)
-  })
+  socket.on('new-user', (name) => {
+    user[socket.id] = name;
+    console.log('this is the name', name);
+    io.emit('user-connected', name);
+  });
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
