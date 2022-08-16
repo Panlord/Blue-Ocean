@@ -12,6 +12,4 @@ db.once('open', () => {
   console.log('mongoose connected successfully');
 });
 
-console.log('testing db');
-
 module.exports = db;
