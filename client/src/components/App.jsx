@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchBar from './SearchBar/SearchBar.jsx';
 
 export default function App() {
+  const [queue, setQueue] = useState([]);
+
   return (
     <div>
-      <SearchBar />
+      <SearchBar setQueue={setQueue} />
     </div>
   );
 }
