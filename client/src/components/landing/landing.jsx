@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import Player from '../player.jsx';
-import Chat from '../Chat/Chat.jsx';
 import Login from './login.jsx';
+import Room from './Room.jsx';
 import '../App.css';
 
-function Landing({setUsername}) {
+function Landing({ username, setUsername, setDevice_id }) {
   const [token, setToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
 
   useEffect(() => {
     async function getToken() {
-      const response = await fetch('http://localhost:3001/auth/token');
+      const response = await fetch(`http://localhost:3001/auth/token?authCode=${window.location.href.slice(window.location.href.indexOf("=")+1, window.location.href.length)}`);
       const json = await response.json();
       if (json.access_token && json.refresh_token) {
-        console.log('inside')
-       setToken(json.access_token);
-       setRefreshToken(json.refresh_token)
+        console.log('inside');
+        setToken(json.access_token);
+        setRefreshToken(json.refresh_token);
       }
     }
 
@@ -24,9 +23,9 @@ function Landing({setUsername}) {
 
   return (
     <>
-      { (token === '') ? <Login/> : <><Player token={token} refreshToken={refreshToken} setUsername={setUsername} /> <Chat /> </>}
+      { (token === '') ? <Login/> : <Room token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} />}
     </>
-  )
+  );
 }
 
 export default Landing;
