@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 // const db = require('./index.js');
 
 const trackSchema = mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'users',
   },
   songName: String,
   songImg: String,
@@ -14,18 +14,18 @@ const trackSchema = mongoose.Schema({
     {
       user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
-      }
-    }
+        ref: 'users',
+      },
+    },
   ],
   dislikes: [
     {
       user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
-      }
-    }
-  ]
+        ref: 'users',
+      },
+    },
+  ],
 });
 
 const Track = mongoose.model('Track', trackSchema);
