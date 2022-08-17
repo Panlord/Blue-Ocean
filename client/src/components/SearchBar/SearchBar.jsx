@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FiPlusCircle } from 'react-icons/fi';
 import axios from 'axios';
 
-export default function SearchBar({ setQueue, username, token }) {
+export default function SearchBar({ setQueue, username, token, deviceID }) {
   const [searchEntry, setSearchEntry] = useState('');
   const [songs, setSongs] = useState([]);
 
@@ -32,13 +32,20 @@ export default function SearchBar({ setQueue, username, token }) {
 
   const addToQueue = (e, song) => {
     e.preventDefault();
-    setQueue((prev) => [...prev, {
-      name: song.name,
+    const queueData = {
+      user: username,
+      songName: song.name,
+      songImg: song.album.images[0].url,
       artist: song.album.artists[0].name,
-      imageURL: song.album.images[0].url,
       uri: song.uri,
-      username,
-    }]);
+    };
+    setQueue((prev) => [...prev, queueData]);
+    axios.all([
+      axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${deviceID}&uri=${song.uri}`, null, { headers: { Authorization: `Bearer ${token}` } })
+        .catch((err) => console.log(err)),
+      axios.post('/addToQueue', queueData)
+        .catch((err) => console.log(err)),
+    ]).catch((err) => console.log(err));
   };
 
   return (
@@ -51,13 +58,15 @@ export default function SearchBar({ setQueue, username, token }) {
         {searchEntry.length ?
         <SearchResult>
           {songs.map((song) => (
-            <SongContainer>
+            <SongContainer onClick={(e) => {
+                addToQueue(e, song);
+                setSearchEntry('');
+                }}>
               <img alt="" src={song.album.images[0].url} width="50" />
-              <List
-                key={song.id}>
+              <List key={song.id}>
                 {`${song.name} - ${song.artists[0].name}`}
               </List>
-              <AddButton onClick={(e) => { addToQueue(e, song); }}/>
+              <AddButton />
             </SongContainer>
           ))}
         </SearchResult> : <></>
@@ -145,7 +154,6 @@ const List = styled.li`
   align-items: center;
   width: 100%;
   height: 90px;
-  cursor: default;
   border-radius: 3px;
   font-size: 17px;
 `;

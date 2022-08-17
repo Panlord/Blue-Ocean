@@ -13,6 +13,7 @@ export default function Chat({ username }) {
   const [message, setMessage] = useState('');
   const [listOfMessages, setListOfMessages] = useState([]);
   const [name, setName] = useState('');
+  const [group, setGroup] = useState(['A', 'B', 'C', 'D', 'E']);
 
   // need something to get userName from token data
   useEffect(() => {
@@ -68,6 +69,11 @@ export default function Chat({ username }) {
 
   return (
     <ChatContainer>
+      <UserFace id="face">
+        <div>{group.map((pic, index) => {
+          return <span>{pic}</span>
+        })}</div>
+      </UserFace>
       <Messages id="messages">
         <div>
           {listOfMessages.map((msg, index) => <Message key={index}>{msg}</Message>)}
@@ -128,3 +134,15 @@ const SendButtonWrapper = styled.div`
   position: absolute;
   right: 2%;
 `;
+
+const UserFace = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 90vw;
+  height: 15vh;
+  background: blue;
+  border: 2px solid #000000;
+  border-radius: 20px;
+`;
+
