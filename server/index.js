@@ -6,10 +6,7 @@ const routes = require('./routes');
 // const {save} = require('./db/models.js')
 const db = require('./db/index.js');
 
-
 const app = express();
-
-const routes = require('./routes');
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(express.json());
