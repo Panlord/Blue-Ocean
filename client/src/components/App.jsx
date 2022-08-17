@@ -34,7 +34,7 @@ export default function App() {
 
   return (
     <div className="AppDiv">
-      <Landing username={username} setUsername={setUsername} setDevice_id={setDevice_id} songList={songList} />
+      <Landing username={username} setUsername={setUsername} setDevice_id={setDevice_id} songList={songList} device_id={device_id} />
       <div className="QueueDiv">
         <Queue songList={songList} />
       </div>
