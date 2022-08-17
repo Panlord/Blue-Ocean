@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 
 const socket = io();
 
-export default function Chat({ token }) {
+export default function Chat({ username }) {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [lastPong, setLastPong] = useState(null);
   const [message, setMessage] = useState('');
@@ -15,12 +15,12 @@ export default function Chat({ token }) {
 
   // need something to get userName from token data
   useEffect(() => {
-    if (token !== null) {
-      console.log(token);
-      setName(token);
+    if (name !== null) {
+      console.log(name);
+      setName(username);
       socket.emit('new-user', name);
     }
-  }, [name]);
+  }, [username]);
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -61,31 +61,44 @@ export default function Chat({ token }) {
       return;
     }
     socket.emit('chat message', message);
+    console.log(username, name);
     setMessage('');
   };
 
   return (
-    <div>
-      <h1>
-        Whaddup Boss
-      </h1>
+    <ChatContainer>
       <Messages id="messages">
         {listOfMessages.map((msg, index) => <li key={index}>{msg}</li>)}
       </Messages>
-      <MessageForm id="form" >
+      <MessageForm id="form">
         <MessageInput id="input" type="text" value={message} autocomplete="off" onChange={(event) => { setMessage(event.target.value); }} />
         <SendButton onClick={(event) => { handleSubmit(event); }}>Send</SendButton>
       </MessageForm>
-    </div>
+    </ChatContainer>
   );
 }
 
+
+// const MessageForm = styled.form`
+//   background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px);
+//   ;
+// `;
+
+const ChatContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+  height: 90vh;
+`;
 const Messages = styled.ul`
   list-style-type: none; margin: 0; padding: 0;
+  flex-grow: 1;
+  maxHeight: 850;
+  overflow: auto;
 `;
 const MessageForm = styled.form`
-  background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px);
-  ;
+  display: flex;
+  flex-direction: row;
 `;
 const MessageInput = styled.input`
   border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem;
