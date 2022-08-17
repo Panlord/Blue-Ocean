@@ -69,7 +69,7 @@ function WebPlayback(props) {
 
 
                 axios.get('https://api.spotify.com/v1/me',  {headers: {Authorization: `Bearer ${props.token}`}})
-                .then((res) => {props.setUsername({username: res.data.id});
+                .then((res) => {props.setUsername(res.data.id);
             })
                 .catch((err) => console.log(err))
             });
