@@ -20,7 +20,9 @@ module.exports = {
   get : (req, res) => {
     var scope = "streaming \
     user-read-email \
-    user-read-private"
+    user-read-private \
+    playlist-modify-private \
+    playlist-modify-public"
 
     var state = generateRandomString(16);
 

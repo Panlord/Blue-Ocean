@@ -20,6 +20,7 @@ function WebPlayback(props) {
     const [player, setPlayer] = useState(undefined);
     const [current_track, setTrack] = useState(track);
     const [device_id, setDevice_id] = useState('');
+    const [playlist_uri, setPlaylist_uri] = useState('');
 
 
     useEffect(() => {
@@ -40,6 +41,7 @@ function WebPlayback(props) {
             });
 
             setPlayer(player);
+
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
                 props.setDevice_id({ device_id })
@@ -47,13 +49,28 @@ function WebPlayback(props) {
                 let wrapperFunction = () => {
                    axios.put('https://api.spotify.com/v1/me/player', {'device_ids': [`${device_id}`], play: true},
                 {headers: {Authorization: `Bearer ${props.token}`}})
-                .then((res)=> console.log(res))
+                .then(()=>{
+
+                    axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${device_id}&uri=spotify:track:4cOdK2wGLETKBW3PvgPWqT`, null,
+                    {headers: {Authorization: `Bearer ${props.token}`} })
+                    .then((res) => {
+                        console.log('inside queue')
+                        axios.post(`https://api.spotify.com/v1/me/player/next?device_id=${device_id}`, null,
+                    {headers: {Authorization: `Bearer ${props.token}`} })
+                        })
+                    .catch((err) => console.log(err))
+                })
                 .catch((err) => {console.log(err)
                 wrapperFunction()})
                 }
                 wrapperFunction();
+
+
+
+
                 axios.get('https://api.spotify.com/v1/me',  {headers: {Authorization: `Bearer ${props.token}`}})
-                .then((res) => {props.setUsername({username: res.data.id})})
+                .then((res) => {props.setUsername({username: res.data.id});
+            })
                 .catch((err) => console.log(err))
             });
 
@@ -72,6 +89,7 @@ function WebPlayback(props) {
                     return;
                 }
 
+                // console.log(state.track_window, 'track window');
                 setTrack(state.track_window.current_track);
                 setPaused(state.paused);
 
@@ -82,8 +100,6 @@ function WebPlayback(props) {
             }));
 
             player.connect();
-
-
 
         };
     }, []);

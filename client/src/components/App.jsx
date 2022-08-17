@@ -36,12 +36,11 @@ export default function App() {
   return (
     <div>
       < SearchBar setQueue={setQueue} />
-      Hello Sonar!
+
       <Landing setUsername={setUsername} setDevice_id={setDevice_id}/>
       <div >
         <Queue songList={songList} />
       </div>
-
     </div>
   );
 }

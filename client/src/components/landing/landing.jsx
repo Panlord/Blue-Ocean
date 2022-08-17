@@ -9,13 +9,10 @@ function Landing({setUsername, setDevice_id}) {
 
   useEffect(() => {
     async function getToken() {
-      const response = await fetch(`http://localhost:3001/auth/token?authCode=${window.location.href.slice(window.location.href.indexOf("=")+1, window.location.href.length)}`);
+      const response = await fetch(`http://localhost:3001/auth/token?authCode=${window.location.href.slice(window.location.href.indexOf("authCode=")+9, window.location.href.length)}`);
       const json = await response.json();
-      if (json.access_token && json.refresh_token) {
-        console.log('inside')
-       setToken(json.access_token);
-       setRefreshToken(json.refresh_token)
-      }
+      setToken(json.access_token);
+      setRefreshToken(json.refresh_token)
     }
 
     getToken();
