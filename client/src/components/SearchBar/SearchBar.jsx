@@ -61,40 +61,26 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
         <SearchIcon>
           <i className="fa fa-search" />
         </SearchIcon>
+        {searchEntry.length ?
         <SearchResult>
           {songs.map((song) => (
-            <SongContainer>
+            <SongContainer onClick={(e) => {
+                addToQueue(e, song);
+                setSearchEntry('');
+                }}>
               <img alt="" src={song.album.images[0].url} width="50" />
-              <List
-                type="button"
-                onClick={(e) => { addToQueue(e, song); }}
-                key={song.id}
-              >
+              <List key={song.id}>
                 {`${song.name} - ${song.artists[0].name}`}
               </List>
               <AddButton />
             </SongContainer>
           ))}
-        </SearchResult>
+        </SearchResult> : <></>
+        }
       </SearchForm>
     </Container>
   );
 }
-
-const SongContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  padding-bottom: 1px;
-  padding-left: 3px;
-  padding-top: 3px;
-  &:hover {
-    color: #FFF;
-    background-color: #1F7A8C;
-    cursor: pointer;
-  }
-`;
 
 const Container = styled.div`
   display: flex;
@@ -103,7 +89,7 @@ const Container = styled.div`
 `;
 
 const SearchForm = styled.form`
-  max-width: 600px;
+  width: 100%;
   height: 36px;
   display: flex;
   position: relative;
@@ -144,16 +130,36 @@ const SearchResult = styled.ul`
   padding: 0;
   overflow: hidden;
   border-radius: 3px;
-  background-color: #5e5d5b;
+  color: white;
+  background-color: #333;
+`;
+
+const SongContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding-bottom: 2px;
+  padding-left: 6px;
+  padding-top: 6px;
+  border-radius: 20px;
+  border-left: 1px solid #70CAD1;
+  border-right: 1px solid #70CAD1;
+  border-bottom: 1px solid #70CAD1;
+  &:hover {
+    color: #FFF;
+    background-color: #70CAD1;
+    cursor: pointer;
+  };
 `;
 
 const List = styled.li`
   list-style: none;
-  padding: 10px 0 10px 10px;;
+  padding: 10px;
   display: flex;
   align-items: center;
   width: 100%;
-  cursor: default;
+  height: 90px;
   border-radius: 3px;
   font-size: 17px;
 `;
@@ -161,7 +167,7 @@ const List = styled.li`
 const AddButton = styled(FiPlusCircle)`
   fontSize: 30px;
   display: flex;
-  font-size: 25px;
+  font-size: 30px;
   margin-right: 10px;
   opacity: 0;
   ${SongContainer}:hover & {
