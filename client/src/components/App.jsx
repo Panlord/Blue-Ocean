@@ -5,7 +5,6 @@ import Landing from './landing/landing.jsx';
 import Queue from './Queue/Queue.jsx';
 
 export default function App() {
-  const [queue, setQueue] = useState([]);
   const [username, setUsername] = useState(null);
   const [device_id, setDevice_id] = useState(null);
   const [skip, setSkip] = useState(false);
@@ -15,11 +14,14 @@ export default function App() {
   }
 
   return (
+
     <div className="AppDiv">
-      <Landing username={username} setUsername={setUsername} setDevice_id={setDevice_id} songList={songList} />
+      <Landing username={username} setUsername={setUsername} setDevice_id={setDevice_id} />
       {/* <div className="QueueDiv">
         <Queue songList={songList} username={username} />
       </div> */}
     </div>
-  );
+
+  )
 }
+

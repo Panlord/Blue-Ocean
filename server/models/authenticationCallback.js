@@ -52,8 +52,8 @@ module.exports = (code, authCode, callback) => {
   request.post(authOptions, function(error, response, body) {
     console.log(body)
     if (response.statusCode === 200) {
-      console.log(body.access_token, 'body access token')
-      console.log(global, 'global item');
+      //console.log(body.access_token, 'body access token')
+      //console.log(global, 'global item');
       global[authCode] = {
         access_token : body.access_token,
         refresh_token: body.refresh_token
@@ -61,6 +61,7 @@ module.exports = (code, authCode, callback) => {
       //global.refresh_token = body.refresh_token;
       //global.access_token = body.access_token;
       //console.log(global.access_token, 'global1')
+      setTimeout(() => delete global[authCode], 10000);
       callback(null, response);
     } else {
       callback(error, null)

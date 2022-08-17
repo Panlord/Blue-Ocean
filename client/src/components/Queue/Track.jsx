@@ -9,10 +9,10 @@ export default function Track ({ track, username, token }) {
   const [likeStatus, setLikeStatus] = useState(false);
   const [dislikeStatus, setDislikeStatus] = useState(false);
 
-  useEffect(() => {
-    axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${device_id}&uri=${track.uri}`, null,
-                    {headers: {Authorization: `Bearer ${token}`} })
-  }, [])
+  // useEffect(() => {
+  //   axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${device_id}&uri=${track.uri}`, null,
+  //                   {headers: {Authorization: `Bearer ${token}`} })
+  // }, [])
 
   useEffect(() => {
     axios.get('/findLikes', { params: { uri: track.uri } })
