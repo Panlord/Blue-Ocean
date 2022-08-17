@@ -32,15 +32,20 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
 
   const addToQueue = (e, song) => {
     e.preventDefault();
-    setQueue((prev) => [...prev, {
-      name: song.name,
+    const queueData = {
+      user: username,
+      songName: song.name,
+      songImg: song.album.images[0].url,
       artist: song.album.artists[0].name,
-      imageURL: song.album.images[0].url,
       uri: song.uri,
-      username,
-    }]);
-    axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${deviceID}&uri=${song.uri}`, null, { headers: { Authorization: `Bearer ${token}` } })
-      .catch((err) => console.log(err));
+    };
+    setQueue((prev) => [...prev, queueData]);
+    axios.all([
+      axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${deviceID}&uri=${song.uri}`, null, { headers: { Authorization: `Bearer ${token}` } })
+        .catch((err) => console.log(err)),
+      axios.post('/addToQueue', queueData)
+        .catch((err) => console.log(err)),
+    ]).catch((err) => console.log(err));
   };
 
   return (
