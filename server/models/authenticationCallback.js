@@ -7,7 +7,7 @@ var spotify_client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 
 
 
-module.exports = (code, callback) => {
+module.exports = (code, authCode, callback) => {
   // var authOptions = {
   //   url: 'https://accounts.spotify.com/api/token',
   // };
@@ -54,9 +54,13 @@ module.exports = (code, callback) => {
     if (response.statusCode === 200) {
       console.log(body.access_token, 'body access token')
       console.log(global, 'global item');
-      global.refresh_token = body.refresh_token;
-      global.access_token = body.access_token;
-      console.log(global.access_token, 'global1')
+      global[authCode] = {
+        access_token : body.access_token,
+        refresh_token: body.refresh_token
+      }
+      //global.refresh_token = body.refresh_token;
+      //global.access_token = body.access_token;
+      //console.log(global.access_token, 'global1')
       callback(null, response);
     } else {
       callback(error, null)

@@ -6,6 +6,7 @@ import Queue from './Queue/Queue.jsx';
 export default function App() {
   const [queue, setQueue] = useState([]);
   const [username, setUsername] = useState(null);
+  const [device_id, setDevice_id] = useState(null);
   const [songList, setSongList] = useState([
     {
       name: 'Celebrity',
@@ -36,8 +37,8 @@ export default function App() {
     <div>
       <SearchBar setQueue={setQueue} username={username} />
       Hello Sonar!
-      <Landing setUsername={setUsername} />
-      <div>
+      <Landing setUsername={setUsername} setDevice_id={setDevice_id} />
+      <div >
         <Queue songList={songList} />
       </div>
 
