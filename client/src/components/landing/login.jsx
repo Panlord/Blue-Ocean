@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 
 function Login() {
-
-
   return (
     <div className="App">
       <header className="App-header">
@@ -12,7 +10,7 @@ function Login() {
         </a>
       </header>
     </div>
-  )
+  );
 }
 
 export default Login;
