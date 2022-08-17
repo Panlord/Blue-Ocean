@@ -23,7 +23,7 @@ function Landing({setUsername, setDevice_id}) {
 
   return (
     <>
-      { (token === '') ? <Login/> : <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id}/>}
+      { (token === '') ? <Login/> : <Room token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} />}
     </>
   );
 }
