@@ -15,26 +15,19 @@ router.get('/auth/login', controller.authentication.get);
 router.get('/auth/callback', controller.authenticationCallback.get);
 router.get('/auth/token', controller.getToken.get);
 router.post('/addToQueue', (req, res) => {
-  console.log('req.body',req.body)
+  console.log('req.body',req.body);
   Track.create(req.body)
     .then((response) => {
       // console.log('req.body: ', req);
-      res.status(200).send(response)
+      res.status(200).send(response);
     })
     .catch((err) => {
       console.log('error creating track', err);
-      res.status(400).send("error when create track")
-    })
-  // user: Strring,})
-  // songName: String,
-  // songImg: String,
-  // artist: String,
-  // uri: String,
-  // likes: [user: String],
-  // dislikes: [user: String]
-} )
+      res.status(400).send("error when create track");
+    });
+});
 
-router.put("/action/:uri", async (req, res) => {
+router.put('/action/:uri', async (req, res) => {
   try {
     const findTrack = await Track.find({uri: req.body.uri});
     // console.log('type for likes', Array.isArray(findTrack[0].likes))
@@ -59,6 +52,19 @@ router.put("/action/:uri", async (req, res) => {
   }
 });
 
-
+router.get('/findLikes', async (req, res) => {
+  try {
+    console.log('req.query for get request: ', req.query)
+    const findTrack = await Track.find({uri: req.query.uri});
+    console.log('findTrack: ', findTrack);
+    return res.status(200).send({
+      likes: findTrack[0].likes.length,
+      dislikes: findTrack[0].dislikes.length
+    });
+  } catch (err) {
+    console.log("error getting like count", err);
+    res.status(500).send(err);
+  }
+});
 
 module.exports = router;

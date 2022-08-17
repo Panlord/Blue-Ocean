@@ -4,6 +4,23 @@ import axios from 'axios';
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 
 export default function Track ({ track, username }) {
+  const [likeCount, setLikeCount] = useState('');
+  const [dislikeCount, setDislikeCount] = useState('');
+  const [likeStatus, setLikeStatus] = useState(false);
+  const [dislikeStatus, setDislikeStatus] = useState(false);
+
+  useEffect(() => {
+    axios.get('/findLikes', { params: { uri: track.uri } })
+      .then((response) => {
+        console.log('response for get likes: ', response.data);
+        setLikeCount(response.data.likes);
+        setDislikeCount(response.data.dislikes);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log('testing useEffect change');
+  }, [likeStatus, dislikeStatus]);
 
   const handleLike = (button) => {
     const params = {
@@ -16,24 +33,58 @@ export default function Track ({ track, username }) {
         console.log(response.data);
       })
       .catch((err) => {
-        console.log('error handleLike', err);
-      })
+        console.log('error liking track', err);
+      });
+    if (button === 'like') {
+      setLikeStatus(true);
+      console.log('changed like status');
+    } else {
+      setDislikeStatus(true);
+    }
   };
 
   return (
-    <div>
-      <SongContainer>
-        <SongImage src={track.imageUrl}></SongImage>
+    <div >
+      <SongContainer >
+        <SongImage src={track.imageUrl} />
         <InnerContainer>
           <ArtistName>{track.artist}</ArtistName>
           <SongName>{track.name}</SongName>
-          <ThumbsUp onClick={() => handleLike('like')} />
-          <ThumbsDown onClick={() => handleLike('dislike')} />
+          <ThumbsContainer>
+            <LikesContainer>
+              <ThumbsUp onClick={() => handleLike('like')} />
+              <Count>{likeCount}</Count>
+            </LikesContainer>
+            <LikesContainer>
+              <ThumbsDown onClick={() => handleLike('dislike')} />
+              <Count>{dislikeCount}</Count>
+            </LikesContainer>
+          </ThumbsContainer>
         </InnerContainer>
       </SongContainer>
     </div>
   )
 }
+
+const ThumbsContainer = styled.div`
+display: flex;
+`
+
+
+const LikesContainer = styled.div`
+display: flex;
+`
+
+const Count = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 11px;
+height: 10px;
+width: 10px;
+border: 1px solid;
+border-radius: 50%;
+`
 
 const SongContainer = styled.div`
 border: 1px solid;

@@ -16,19 +16,27 @@ export default function Queue ({ songList, username }) {
   // }, [songInfo])
 
   return (
-    <div>
+    <Container className='Queue'>
       <QueueContainer>
         {songList.map((item, index) => (
           <Track track={item} key={index} username={username} />
         ))}
       </QueueContainer>
-    </div>
+    </Container>
   )
 }
+
+const Container = styled.div`
+width: 270px;
+height: 900px;
+border: 1px solid;
+border-radius: 20px;
+`
 
 const QueueContainer = styled.div`
 display: flex;
 flex-direction: column;
 width: 250px;
 height: auto;
+margin: 10px;
 `

@@ -1,4 +1,4 @@
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -42,7 +42,6 @@ body {
   bottom: 0;
   background-size: cover;
   background-position: center center;
-  /*filter: blur(8em) opacity(0.6);*/
   position: absolute;
 }
 
@@ -114,4 +113,4 @@ body {
   top:1px;
 }
 
-img { background: transparent; }
+img { background: transparent; } */

@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import React, { useState } from 'react';
 import SearchBar from './SearchBar/SearchBar.jsx';
 import Landing from './landing/landing.jsx';
@@ -5,7 +6,7 @@ import Queue from './Queue/Queue.jsx';
 
 export default function App() {
   const [queue, setQueue] = useState([]);
-  const [username, setUsername] = useState('Aaron');
+  const [username, setUsername] = useState('Toan');
   const [songList, setSongList] = useState([
     {
       name: "Celebrity",
@@ -31,6 +32,11 @@ export default function App() {
       uri: "spotify:track:35xilew5nalcetOeytaDFj"
     },
   ]);
+  const [skip, setSkip] = useState(false);
+
+  const handleSkip = () => {
+    setSkip(!skip)
+  }
 
   return (
     <div>
