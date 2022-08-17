@@ -3,7 +3,7 @@ import Login from './login.jsx';
 import Room from './Room.jsx';
 import '../App.css';
 
-function Landing({setUsername, setDevice_id}) {
+function Landing({ username, setUsername, setDevice_id, songList }) {
   const [token, setToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
 
@@ -23,7 +23,7 @@ function Landing({setUsername, setDevice_id}) {
 
   return (
     <>
-      { (token === '') ? <Login/> : <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id}/>}
+      { (token === '') ? <Login/> : <Room token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id}  songList={songList} />}
     </>
   );
 }
