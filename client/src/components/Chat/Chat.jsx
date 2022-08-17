@@ -69,11 +69,11 @@ export default function Chat({ username }) {
 
   return (
     <ChatContainer>
-      <UserFace id="face">
+      {/* <UserFace id="face">
         <div>{group.map((pic, index) => {
           return <span>{pic}</span>
         })}</div>
-      </UserFace>
+      </UserFace> */}
       <Messages id="messages">
         <div>
           {listOfMessages.map((msg, index) => <Message key={index}>{msg}</Message>)}

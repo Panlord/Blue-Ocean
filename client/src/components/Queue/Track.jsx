@@ -49,12 +49,12 @@ export default function Track ({ track, username, token }) {
   };
 
   return (
-    <div >
-      <SongContainer >
-        <SongImage src={track.imageUrl} />
+    <div>
+      <SongContainer>
+        <SongImage src={track.songImg} />
         <InnerContainer>
           <ArtistName>{track.artist}</ArtistName>
-          <SongName>{track.name}</SongName>
+          <SongName>{track.songName}</SongName>
           <ThumbsContainer>
             <LikesContainer>
               <ThumbsUp onClick={() => handleLike('like')} />

@@ -15,10 +15,10 @@ router.get('/auth/login', controller.authentication.get);
 router.get('/auth/callback', controller.authenticationCallback.get);
 router.get('/auth/token', controller.getToken.get);
 router.post('/addToQueue', (req, res) => {
-  console.log('req.body',req.body);
+  // console.log('req.body',req.body);
   Track.create(req.body)
     .then((response) => {
-      // console.log('req.body: ', req);
+      console.log('req.body: ', req.body);
       res.status(200).send(response);
     })
     .catch((err) => {

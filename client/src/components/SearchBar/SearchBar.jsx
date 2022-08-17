@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FiPlusCircle } from 'react-icons/fi';
 import axios from 'axios';
 
-export default function SearchBar({ setQueue, username, token }) {
+export default function SearchBar({ setQueue, username, token, deviceID }) {
   const [searchEntry, setSearchEntry] = useState('');
   const [songs, setSongs] = useState([]);
 
@@ -32,13 +32,20 @@ export default function SearchBar({ setQueue, username, token }) {
 
   const addToQueue = (e, song) => {
     e.preventDefault();
-    setQueue((prev) => [...prev, {
-      name: song.name,
-      artist: song.album.artists[0].name,
-      imageUrl: song.album.images[0].url,
-      uri: song.uri,
+    const queueData = {
       user: username,
-    }]);
+      songName: song.name,
+      songImg: song.album.images[0].url,
+      artist: song.album.artists[0].name,
+      uri: song.uri,
+    };
+    setQueue((prev) => [...prev, queueData]);
+    axios.all([
+      axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${deviceID}&uri=${song.uri}`, null, { headers: { Authorization: `Bearer ${token}` } })
+        .catch((err) => console.log(err)),
+      axios.post('/addToQueue', queueData)
+        .catch((err) => console.log(err)),
+    ]).catch((err) => console.log(err));
   };
 
   return (
@@ -55,7 +62,8 @@ export default function SearchBar({ setQueue, username, token }) {
               <List
                 type="button"
                 onClick={(e) => { addToQueue(e, song); }}
-                key={song.id}>
+                key={song.id}
+              >
                 {`${song.name} - ${song.artists[0].name}`}
               </List>
               <AddButton />

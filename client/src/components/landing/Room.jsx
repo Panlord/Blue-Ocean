@@ -6,30 +6,29 @@ import SearchBar from '../SearchBar/SearchBar.jsx';
 import Player from '../player.jsx';
 import Chat from '../Chat/Chat.jsx';
 
-export default function Room({ token, refreshToken, username, setUsername, setDevice_id }) {
+export default function Room({ token, refreshToken, username, setUsername, device_id, setDevice_id }) {
   const [queue, setQueue] = useState([
     {
-      name: 'Celebrity',
+      songName: 'Celebrity',
       artist: 'IU',
-      imageUrl:
+      songImg:
         'https://i.scdn.co/image/ab67616d0000b2734ed058b71650a6ca2c04adff',
-      // audioUrl: "https://open.spotify.com/track/5nCwjUUsmBuNZKn9Xu10Os",
       uri: 'spotify:track:5nCwjUUsmBuNZKn9Xu10Os',
       user: 'Aaron',
     },
     {
-      name: 'Blue Monday',
+      songName: 'Blue Monday',
       artist: 'Imagine Dragons',
-      imageUrl:
+      songImg:
         'https://i.scdn.co/image/ab67616d0000b273fc915b69600dce2991a61f13',
       uri: 'spotify:track:6hHc7Pks7wtBIW8Z6A0iFq',
       user: 'Harrison',
 
     },
     {
-      name: '還在流浪',
+      songName: '還在流浪',
       artist: 'Jay Chou',
-      imageUrl:
+      songImg:
         'https://i.scdn.co/image/ab67616d0000b273d3480d741fad497e24f2fafe',
       uri: 'spotify:track:35xilew5nalcetOeytaDFj',
       user: 'Shanshan',
@@ -38,9 +37,9 @@ export default function Room({ token, refreshToken, username, setUsername, setDe
 
   return (
     <RoomContainer className="roomContainer">
-      <Queue queue={queue} token={token}/>
+      <Queue queue={queue} token={token} />
       <div className="centerStuff">
-        <SearchBar setQueue={setQueue} token={token} />
+        <SearchBar setQueue={setQueue} token={token} deviceID={device_id} />
         <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} />
       </div>
       <Chat username={username} />
