@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { FiPlusCircle } from 'react-icons/fi';
 import axios from 'axios';
 
 export default function SearchBar({ setQueue, username, token }) {
@@ -51,7 +52,13 @@ export default function SearchBar({ setQueue, username, token }) {
           {songs.map((song) => (
             <SongContainer>
               <img alt="" src={song.album.images[0].url} width="50" />
-              <List type="button" onClick={(e) => { addToQueue(e, song); }} key={song.id}>{`${song.name} - ${song.artists[0].name}`}</List>
+              <List
+                type="button"
+                onClick={(e) => { addToQueue(e, song); }}
+                key={song.id}>
+                {`${song.name} - ${song.artists[0].name}`}
+              </List>
+              <AddButton />
             </SongContainer>
           ))}
         </SearchResult>
@@ -62,10 +69,17 @@ export default function SearchBar({ setQueue, username, token }) {
 
 const SongContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: row;
   padding-bottom: 1px;
   padding-left: 3px;
   padding-top: 3px;
+  &:hover {
+    color: #FFF;
+    background-color: #1F7A8C;
+    cursor: pointer;
+  }
 `;
 
 const Container = styled.div`
@@ -117,9 +131,7 @@ const SearchResult = styled.ul`
   overflow: hidden;
   border-radius: 3px;
   background-color: #5e5d5b;
-  ${'' /* opacity: 0; */}
 `;
-//  background-color: #D9D9D9;
 
 const List = styled.li`
   list-style: none;
@@ -130,10 +142,15 @@ const List = styled.li`
   cursor: default;
   border-radius: 3px;
   font-size: 17px;
-  ${'' /* display: none; */}
-  &:hover {
-    color: #FFF;
-    background-color: #1F7A8C;
-    cursor: pointer;
+`;
+
+const AddButton = styled(FiPlusCircle)`
+  fontSize: 30px;
+  display: flex;
+  font-size: 25px;
+  margin-right: 10px;
+  opacity: 0;
+  ${SongContainer}:hover & {
+    opacity: 1;
   }
 `;
