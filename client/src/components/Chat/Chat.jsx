@@ -2,6 +2,7 @@
 // Import stuff
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { BsFillArrowUpCircleFill } from 'react-icons/bs';
 import io from 'socket.io-client';
 
 const socket = io();
@@ -37,7 +38,7 @@ export default function Chat({ username }) {
     });
 
     socket.on('chat message', (msg) => {
-      const newMessage = `${msg.name} :${msg.msg}`;
+      const newMessage = `${msg.name}: ${msg.msg}`;
       setListOfMessages([...listOfMessages, newMessage]);
     });
 
@@ -68,41 +69,58 @@ export default function Chat({ username }) {
   return (
     <ChatContainer>
       <Messages id="messages">
-        {listOfMessages.map((msg, index) => <li key={index}>{msg}</li>)}
+        {listOfMessages.map((msg, index) => <Message key={index}>{msg}</Message>)}
       </Messages>
-      <MessageForm id="form">
-        <MessageInput id="input" type="text" value={message} autocomplete="off" onChange={(event) => { setMessage(event.target.value); }} />
-        <SendButton onClick={(event) => { handleSubmit(event); }}>Send</SendButton>
+      <MessageForm id="form" onSubmit={(event) => { handleSubmit(event); }}>
+        <MessageInput id="input" type="text" value={message} placeholder="Send a message" autocomplete="off" onChange={(event) => { setMessage(event.target.value); }} />
+        <SendButtonWrapper>
+          <BsFillArrowUpCircleFill onClick={(event) => { handleSubmit(event); }} />
+        </SendButtonWrapper>
       </MessageForm>
     </ChatContainer>
   );
 }
 
-
-// const MessageForm = styled.form`
-//   background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px);
-//   ;
-// `;
-
 const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 25vw;
-  height: 90vh;
+  height: 80vh;
+  background: #0D1317;
+  border: 2px solid #000000;
+  border-radius: 20px;
 `;
 const Messages = styled.ul`
-  list-style-type: none; margin: 0; padding: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
   flex-grow: 1;
-  maxHeight: 850;
+  max-height: 80vh;
   overflow: auto;
+`;
+const Message = styled.li`
+  background: #D9D9D9;
+  border-radius: 10px;
+  color: black;
+  font-size: 24px;
+  margin: 4px 8px 4px 8px;
 `;
 const MessageForm = styled.form`
   display: flex;
   flex-direction: row;
+  margin: 16px 8px 8px 8px;
+  position: relative;
 `;
 const MessageInput = styled.input`
-  border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem;
+  background: #D9D9D9;
+  border-radius: 10px;
+  color: black;
+  font-size: 24px;
+  flex-grow: 1;
 `;
-const SendButton = styled.button`
-  background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff;
+// Perhaps turn this sendbuttonwrapper into inline styling for the BsFillArrowUpCircleFill
+const SendButtonWrapper = styled.div`
+  color: #70CAD1;
+  position: absolute;
+  right: 2%;
 `;
