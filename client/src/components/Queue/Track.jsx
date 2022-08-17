@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 
-export default function Track ({ track }) {
+export default function Track ({ track, username }) {
 
+  const handleLike = (button) => {
+    const params = {
+      user: username,
+      action: button,
+      uri: track.uri
+    };
+    axios.put(`/action/${track.uri}`, params)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log('error handleLike', err);
+      })
+  };
 
   return (
     <div>
@@ -12,8 +27,8 @@ export default function Track ({ track }) {
         <InnerContainer>
           <ArtistName>{track.artist}</ArtistName>
           <SongName>{track.name}</SongName>
-          <ThumbsUp />
-          <ThumbsDown />
+          <ThumbsUp onClick={() => handleLike('like')} />
+          <ThumbsDown onClick={() => handleLike('dislike')} />
         </InnerContainer>
       </SongContainer>
     </div>

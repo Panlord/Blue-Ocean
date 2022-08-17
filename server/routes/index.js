@@ -9,6 +9,7 @@ const router = express.Router();
 const controller = require('../controllers');
 const Track = require('../db/track.js');
 
+
 //console.log(controller, 'controllers');
 router.get('/auth/login', controller.authentication.get);
 router.get('/auth/callback', controller.authenticationCallback.get);
@@ -17,7 +18,7 @@ router.post('/addToQueue', (req, res) => {
   console.log('req.body',req.body)
   Track.create(req.body)
     .then((response) => {
-      console.log('req.body: ', req);
+      // console.log('req.body: ', req);
       res.status(200).send(response)
     })
     .catch((err) => {
@@ -33,22 +34,23 @@ router.post('/addToQueue', (req, res) => {
   // dislikes: [user: String]
 } )
 
-router.put("/action/:id", async (req, res) => {
+router.put("/action/:uri", async (req, res) => {
   try {
-    const findTrack = await Track.findById(req.params.id);
-    console.log('request for put',req)
-    if (findTrack.likes.includes(req.query.user)) {
+    const findTrack = await Track.find({uri: req.body.uri});
+    // console.log('type for likes', Array.isArray(findTrack[0].likes))
+    console.log('findTrack: ', findTrack);
+    if (findTrack[0].likes.includes(req.body.user)) {
       return res.status(400).send("Track has already been liked");
     }
-    if (findTrack.dislikes.includes(req.query.user)) {
+    if (findTrack[0].dislikes.includes(req.body.user)) {
       return res.status(400).send("Track has already been disliked");
     }
-    if (req.query.action === 'like') {
-      findTrack.likes.push(req.query.user);
+    if (req.body.action === 'like') {
+      findTrack[0].likes.push(req.body.user);
     } else {
-      findTrack.dislikes.push(req.query.user);
+      findTrack[0].dislikes.push(req.body.user);
     }
-    await findTrack.save();
+    await Track.findOneAndUpdate({uri: req.body.uri}, findTrack[0]);
     return res.status(200).send("Likes/dislikes updated");
 
   } catch (err) {

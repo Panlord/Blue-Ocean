@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Track from './Track.jsx';
 
-export default function Queue ({ songList }) {
+export default function Queue ({ songList, username }) {
 
   // songInfo = {
   //   name: 'Celebrity',
@@ -19,7 +19,7 @@ export default function Queue ({ songList }) {
     <div>
       <QueueContainer>
         {songList.map((item, index) => (
-          <Track track={item} key={index} />
+          <Track track={item} key={index} username={username} />
         ))}
       </QueueContainer>
     </div>

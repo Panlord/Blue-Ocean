@@ -5,7 +5,7 @@ import Queue from './Queue/Queue.jsx';
 
 export default function App() {
   const [queue, setQueue] = useState([]);
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState('Aaron');
   const [songList, setSongList] = useState([
     {
       name: "Celebrity",
@@ -38,7 +38,7 @@ export default function App() {
       Hello Sonar!
       <Landing setUsername={setUsername} /> */}
       <div >
-        <Queue songList={songList} />
+        <Queue songList={songList} username={username} />
       </div>
 
     </div>
