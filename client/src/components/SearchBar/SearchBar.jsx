@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 
-export default function SearchBar({ setQueue }) {
+export default function SearchBar({ setQueue, username }) {
   const [searchEntry, setSearchEntry] = useState('');
   const [songs, setSongs] = useState([]);
 
@@ -47,12 +47,25 @@ export default function SearchBar({ setQueue }) {
           <i className="fa fa-search" />
         </SearchIcon>
         <SearchResult>
-          {songs.map((song) => <List type="button" onClick={(e) => { addToQueue(e, song); }} key={song.id}>{song.name}</List>)}
+          {songs.map((song) => (
+            <SongContainer>
+              <img alt="" src={song.album.images[0].url} width="50" />
+              <List type="button" onClick={(e) => { addToQueue(e, song); }} key={song.id}>{`${song.name} - ${song.artists[0].name}`}</List>
+            </SongContainer>
+          ))}
         </SearchResult>
       </SearchForm>
     </Container>
   );
 }
+
+const SongContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 1px;
+  padding-left: 3px;
+  padding-top: 3px;
+`;
 
 const Container = styled.div`
   display: flex;
@@ -102,10 +115,10 @@ const SearchResult = styled.ul`
   padding: 0;
   overflow: hidden;
   border-radius: 3px;
-  background-color: #D9D9D9;
-  border-top: 1px solid #FFF;
+  background-color: #5e5d5b;
   ${'' /* opacity: 0; */}
 `;
+//  background-color: #D9D9D9;
 
 const List = styled.li`
   list-style: none;
@@ -115,6 +128,7 @@ const List = styled.li`
   width: 100%;
   cursor: default;
   border-radius: 3px;
+  font-size: 17px;
   ${'' /* display: none; */}
   &:hover {
     color: #FFF;
