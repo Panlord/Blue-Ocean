@@ -3,11 +3,16 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 
-export default function Track ({ track, username }) {
+export default function Track ({ track, username, token }) {
   const [likeCount, setLikeCount] = useState('');
   const [dislikeCount, setDislikeCount] = useState('');
   const [likeStatus, setLikeStatus] = useState(false);
   const [dislikeStatus, setDislikeStatus] = useState(false);
+
+  useEffect(() => {
+    axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${device_id}&uri=${track.uri}`, null,
+                    {headers: {Authorization: `Bearer ${token}`} })
+  }, [])
 
   useEffect(() => {
     axios.get('/findLikes', { params: { uri: track.uri } })

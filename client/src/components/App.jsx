@@ -6,32 +6,8 @@ import Queue from './Queue/Queue.jsx';
 
 export default function App() {
   const [queue, setQueue] = useState([]);
-  const [username, setUsername] = useState('Toan');
-  const [songList, setSongList] = useState([
-    {
-      name: "Celebrity",
-      artist: "IU",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b2734ed058b71650a6ca2c04adff",
-      // audioUrl: "https://open.spotify.com/track/5nCwjUUsmBuNZKn9Xu10Os",
-      uri: "spotify:track:5nCwjUUsmBuNZKn9Xu10Os"
-    },
-    {
-      name: "Blue Monday",
-      artist: "Imagine Dragons",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b273fc915b69600dce2991a61f13",
-      uri: "spotify:track:6hHc7Pks7wtBIW8Z6A0iFq",
-
-    },
-    {
-      name: "還在流浪",
-      artist: "Jay Chou",
-      imageUrl:
-        "https://i.scdn.co/image/ab67616d0000b273d3480d741fad497e24f2fafe",
-      uri: "spotify:track:35xilew5nalcetOeytaDFj"
-    },
-  ]);
+  const [username, setUsername] = useState(null);
+  const [device_id, setDevice_id] = useState(null);
   const [skip, setSkip] = useState(false);
 
   const handleSkip = () => {
@@ -39,14 +15,11 @@ export default function App() {
   }
 
   return (
-    <div>
-      {/* < SearchBar setQueue={setQueue} />
-      Hello Sonar!
-      <Landing setUsername={setUsername} /> */}
-      <div >
+    <div className="AppDiv">
+      <Landing username={username} setUsername={setUsername} setDevice_id={setDevice_id} songList={songList} />
+      {/* <div className="QueueDiv">
         <Queue songList={songList} username={username} />
-      </div>
-
+      </div> */}
     </div>
   );
 }
