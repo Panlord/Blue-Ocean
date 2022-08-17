@@ -9,7 +9,7 @@ function Landing({ username, setUsername, setDevice_id, songList }) {
 
   useEffect(() => {
     async function getToken() {
-      const response = await fetch(`http://localhost:3001/auth/token?authCode=${window.location.href.slice(window.location.href.indexOf("=")+1, window.location.href.length)}`);
+      const response = await fetch(`http://localhost:3001/auth/token?authCode=${window.location.href.slice(window.location.href.indexOf("authCode=")+9, window.location.href.length)}`);
       const json = await response.json();
       if (json.access_token && json.refresh_token) {
         console.log('inside');

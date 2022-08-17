@@ -4,6 +4,7 @@ import Landing from './landing/landing.jsx';
 import Queue from './Queue/Queue.jsx';
 
 export default function App() {
+
   const [username, setUsername] = useState(null);
   const [device_id, setDevice_id] = useState(null);
   const [songList, setSongList] = useState([
@@ -30,14 +31,17 @@ export default function App() {
         'https://i.scdn.co/image/ab67616d0000b273d3480d741fad497e24f2fafe',
       uri: 'spotify:track:35xilew5nalcetOeytaDFj',
     },
-  ]);
+  ])
 
   return (
+    <>
     <div className="AppDiv">
       <Landing username={username} setUsername={setUsername} setDevice_id={setDevice_id} songList={songList} />
       <div className="QueueDiv">
         <Queue songList={songList} />
       </div>
     </div>
-  );
+    </>
+  )
 }
+
