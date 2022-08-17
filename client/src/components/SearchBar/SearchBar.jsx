@@ -57,7 +57,8 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
               <List
                 type="button"
                 onClick={(e) => { addToQueue(e, song); }}
-                key={song.id}>
+                key={song.id}
+              >
                 {`${song.name} - ${song.artists[0].name}`}
               </List>
               <AddButton />
