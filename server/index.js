@@ -2,6 +2,10 @@
 /* eslint-disable import/order */
 const express = require('express');
 const path = require('path');
+const routes = require('./routes');
+// const {save} = require('./db/models.js')
+const db = require('./db/index.js');
+
 
 const app = express();
 
