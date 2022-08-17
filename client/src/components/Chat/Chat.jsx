@@ -69,7 +69,9 @@ export default function Chat({ username }) {
   return (
     <ChatContainer>
       <Messages id="messages">
-        {listOfMessages.map((msg, index) => <Message key={index}>{msg}</Message>)}
+        <div>
+          {listOfMessages.map((msg, index) => <Message key={index}>{msg}</Message>)}
+        </div>
       </Messages>
       <MessageForm id="form" onSubmit={(event) => { handleSubmit(event); }}>
         <MessageInput id="input" type="text" value={message} placeholder="Send a message" autocomplete="off" onChange={(event) => { setMessage(event.target.value); }} />
@@ -96,6 +98,8 @@ const Messages = styled.ul`
   padding: 0;
   flex-grow: 1;
   max-height: 80vh;
+  display: flex;
+  flex-direction: column-reverse;
   overflow: auto;
 `;
 const Message = styled.li`
