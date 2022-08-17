@@ -13,7 +13,7 @@ export default function Room({ token, refreshToken, username, setUsername, setDe
     <RoomContainer className="roomContainer">
       <Queue songList={songList} />
       <div className="centerStuff">
-        <SearchBar setQueue={setQueue} token={token} />
+        <SearchBar queue={queue} setQueue={setQueue} token={token} />
         <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} />
       </div>
       <Chat username={username} />

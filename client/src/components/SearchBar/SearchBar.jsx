@@ -38,6 +38,8 @@ export default function SearchBar({ setQueue, username, token }) {
       uri: song.uri,
       username,
     }]);
+    axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${device_id}&uri=${track.uri}`, null, { headers: { Authorization: `Bearer ${token}` } })
+      .catch((err) => console.log(err));
   };
 
   return (
