@@ -5,7 +5,7 @@ import Landing from './landing/landing.jsx';
 import Queue from './Queue/Queue.jsx';
 
 export default function App() {
-  const [username, setUsername] = useState('Port3000');
+  const [username, setUsername] = useState('');
   const [device_id, setDevice_id] = useState(null);
   const [skip, setSkip] = useState(false);
 

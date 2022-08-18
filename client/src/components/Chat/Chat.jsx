@@ -17,12 +17,15 @@ export default function Chat({ username }) {
 
   // need something to get userName from token data
   useEffect(() => {
-    if (name !== null) {
-      console.log(name);
+    if (username !== null) {
+      console.log("this is the name to set", username);
       setName(username);
-      socket.emit('new-user', name);
     }
   }, [username]);
+
+  useEffect( () => {
+    socket.emit('new-user', name);
+  }, [name])
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -45,7 +48,7 @@ export default function Chat({ username }) {
 
     socket.on('user-connected', (name) => {
       if (name !== '') {
-        const msg = `${name} is connceted`;
+        const msg = `${name} is connected`;
         setListOfMessages([...listOfMessages, msg]);
       }
     });
