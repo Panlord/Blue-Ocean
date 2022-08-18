@@ -46,7 +46,7 @@ export default function AdminRoom({ token, refreshToken, username, setUsername, 
 
   return (
     <RoomContainer className="roomContainer">
-      <Queue queue={queue} token={token} />
+      <Queue queue={queue} token={token} user={username} />
       <div className="centerStuff">
         <SearchBar setQueue={setQueue} token={token} deviceID={device_id} />
         <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} />

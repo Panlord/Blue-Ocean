@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from "styled-components";
 
 const track = {
   name: '',
@@ -22,6 +23,7 @@ function WebPlayback(props) {
     const [current_track, setTrack] = useState(track);
     const [device_id, setDevice_id] = useState('');
     const [playlist_uri, setPlaylist_uri] = useState('');
+    const [user, setUser] = useState('');
 
     const setUri = (uri) => {
       props.setCurrentUri(uri);
@@ -75,7 +77,7 @@ function WebPlayback(props) {
                 wrapperFunction();
 
                 axios.get('https://api.spotify.com/v1/me',  {headers: {Authorization: `Bearer ${props.token}`}})
-                .then((res) => {console.log(res.data); props.setUsername(res.data.display_name);
+                .then((res) => {console.log(res.data); props.setUsername(res.data.display_name); setUser(res.data.display_name)
             })
                 .catch((err) => console.log(err))
             });
@@ -167,7 +169,9 @@ function WebPlayback(props) {
   return (
     <div className="container">
       <div className="main-wrapper">
+        <div>Added By: {user}
         <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
+        </div>
         <div className="now-playing__side">
           <div className="now-playing__name">{current_track.name}</div>
           <div className="now-playing__artist">{current_track.artists[0].name}</div>
@@ -185,5 +189,7 @@ function WebPlayback(props) {
     </div>
   );
 }
+
+
 
 export default WebPlayback;

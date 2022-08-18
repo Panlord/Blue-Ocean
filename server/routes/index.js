@@ -48,13 +48,17 @@ router.put('/action/:uri', async (req, res) => {
       findTrack[0].dislikes.push(req.body.user);
     }
     await Track.findOneAndUpdate({uri: req.body.uri}, findTrack[0]);
-    return res.status(200).send("Likes/dislikes updated");
+    return res.status(200).send({
+      likes: findTrack[0].likes.length,
+      dislikes: findTrack[0].dislikes.length
+    });
 
   } catch (err) {
     console.log("error liking track", err);
     res.status(500).send("Error");
   }
 });
+
 
 router.get('/findLikes', async (req, res) => {
   try {
@@ -69,6 +73,19 @@ router.get('/findLikes', async (req, res) => {
     console.log("error getting like count", err);
     res.status(500).send(err);
   }
+});
+
+router.delete('/deleteSong', (req, res) => {
+  console.log('req.body', req);
+  Track.findOneAndDelete(req.body)
+    .then((response) => {
+      console.log('delete req.body: ', req.body);
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      console.log('error deleting track', err);
+      res.status(400).send("error when deleting track");
+    });
 });
 
 module.exports = router;
