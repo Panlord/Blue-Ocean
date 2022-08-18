@@ -74,7 +74,7 @@ export default function Chat({ username }) {
     <ChatContainer>
       <UserFace id="face">
         <div>{group.map((pic, index) => {
-          return <span>{pic}</span>
+          return <Face>{pic}</Face>
         })}</div>
       </UserFace>
       <Bar></Bar>
@@ -156,14 +156,24 @@ const UserFace = styled.div`
 `;
 
 const Bar = styled.div `
-display: flex;
-overflow: auto;
-min-height: 1vh;
-background: #333;
-border: 2px solid #000000;
-border-radius: 20px;
-margin-top: 5px;
-margin-left: 2px;
-margin-right:2px
+  display: flex;
+  overflow: auto;
+  min-height: 1vh;
+  background: #333;
+  border: 2px solid #000000;
+  border-radius: 20px;
+  margin-top: 5px;
+  margin-left: 2px;
+  margin-right:2px
 `
 
+const Face = styled.span `
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  background: #333;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  text-align: center;
+  margin: 5px 5px 5px 5px;
+`
