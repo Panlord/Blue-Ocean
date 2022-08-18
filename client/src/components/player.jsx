@@ -75,7 +75,7 @@ function WebPlayback(props) {
                 wrapperFunction();
 
                 axios.get('https://api.spotify.com/v1/me',  {headers: {Authorization: `Bearer ${props.token}`}})
-                .then((res) => {props.setUsername(res.data.id);
+                .then((res) => {console.log(res.data); props.setUsername(res.data.display_name);
             })
                 .catch((err) => console.log(err))
             });
@@ -116,23 +116,22 @@ function WebPlayback(props) {
   // Host presses PLAY/PAUSE button on player
   const handleTogglePlay = (isPaused) => {
     player.togglePlay()
-      .then(() => {console.log('Toggle play');})
       // PUT request to update the state of the room (send WebPlaybackState Object's paused, position, and current_track (the uri))
       .then(() => { // Get the current state of the player
+        console.log('Toggle play');
         return player.getCurrentState();
       })
       .then((state) => {
         let roomData = {
-          roomCode: props.roomCode,
+          roomID: props.roomID,
           paused: state.paused,
           position: state.position,
-          currentSong: state.track_window.current_track.uri // <--------- These might need renaming
+          playingSong: state.track_window.current_track.uri
         };
         return roomData;
       })
-      // TODO
       .then((roomData) => {
-        return axios.put(); //TODO <---------------------
+        return axios.put('/room', roomData);
       })
       .catch((error) => {
         console.log('Error occurred when attempting to PUT room data to server:', error);
@@ -142,9 +141,27 @@ function WebPlayback(props) {
   // Host presses NEXT (or >>) button to skip to next song on player
   const handleSkip = () => {
     // Skip to the next track on the player
-    player.nextTrack().then(() => {console.log('Skipped to next track');});
-    // PUT request to update the state of the room (send WebPlaybackState Object's paused, position, current_track (the uri) and the queue data)
-    // TODO
+    player.nextTrack()
+      // PUT request to update the state of the room (send WebPlaybackState Object's paused, position, current_track (the uri) and the queue data)
+      .then(() => {
+        console.log('Skipped to next track');
+        return player.getCurrentState();
+      })
+      .then((state) => {
+        let roomData = {
+          roomID: props.roomID,
+          paused: state.paused,
+          position: state.position,
+          playingSong: state.track_window.current_track.uri
+        };
+        return roomData;
+      })
+      .then((roomData) => {
+        return axios.put('/room', roomData);
+      })
+      .catch((error) => {
+        console.log('Error occurred when attempting to PUT room data to server:', error);
+      });
   }
 
   return (

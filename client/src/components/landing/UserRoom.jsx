@@ -6,7 +6,9 @@ import SearchBar from '../SearchBar/SearchBar.jsx';
 import Player from '../player.jsx';
 import Chat from '../Chat/Chat.jsx';
 
-export default function UserRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id }) {
+export default function UserRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id, roomID}) {
+
+
   const [currentUri, setCurrentUri] = useState('');
   const [queue, setQueue] = useState([
     // {
@@ -36,12 +38,20 @@ export default function UserRoom({ token, refreshToken, username, setUsername, d
     // },
   ]);
 
+  // useEffect(()=> {
+  //   axios.get('http://localhost:3001/room')
+
+  // }, [])
+
+
+
+
   return (
     <RoomContainer className="roomContainer">
       <Queue queue={queue} token={token} currentUri={currentUri} setQueue={setQueue} />
       <div className="centerStuff">
         <SearchBar setQueue={setQueue} token={token} deviceID={device_id} />
-        <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} currentUri={currentUri} setCurrentUri={setCurrentUri}/>
+        <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} currentUri={currentUri} setCurrentUri={setCurrentUri} />
       </div>
       <Chat username={username} />
     </RoomContainer>

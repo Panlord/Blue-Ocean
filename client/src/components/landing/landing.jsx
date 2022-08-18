@@ -29,7 +29,7 @@ function Landing({ username, setUsername, device_id, setDevice_id }) {
 
   return (
     <div>
-      { (token === '') ? <Login /> : (window.location.href.indexOf('roomID=') !== -1 ? <UserRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} roomCode={roomCode} /> : <AdminRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} roomCode={roomCode} />) }
+      { (token === '') ? <Login /> : (window.location.href.indexOf('roomID=') !== -1 ? <UserRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} roomID={window.location.href.slice(window.location.href.indexOf('roomID=')+7, window.location.href.indexOf('&'))}/> : <AdminRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id}  />) }
     </div>
   );
 }
