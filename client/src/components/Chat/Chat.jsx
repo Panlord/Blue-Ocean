@@ -77,6 +77,7 @@ export default function Chat({ username }) {
           return <span>{pic}</span>
         })}</div>
       </UserFace>
+      <Bar></Bar>
       <Messages id="messages">
         <div>
           {listOfMessages.map((msg, index) => <Message key={index}>{msg}</Message>)}
@@ -153,4 +154,16 @@ const UserFace = styled.div`
   margin-left: 2px;
   margin-right:2px
 `;
+
+const Bar = styled.div `
+display: flex;
+overflow: auto;
+min-height: 1vh;
+background: #333;
+border: 2px solid #000000;
+border-radius: 20px;
+margin-top: 5px;
+margin-left: 2px;
+margin-right:2px
+`
 
