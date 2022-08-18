@@ -57,7 +57,7 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
   return (
     <Container>
       <SearchForm>
-        <Input type="text" name="search" placeholder="Choose a song..." value={searchEntry} onChange={searchChange} />
+        <Input type="text" name="search" placeholder="Choose a song..." autoComplete="off" value={searchEntry} onChange={searchChange} />
         <SearchIcon>
           <i className="fa fa-search" />
         </SearchIcon>
@@ -108,6 +108,7 @@ const Input = styled.input`
   color: #022B3A;
   background-color: #D9D9D9;
   font-size: 18px;
+  autoComplete: "off";
 `;
 
 const SearchIcon = styled.div`

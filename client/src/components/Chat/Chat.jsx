@@ -83,7 +83,7 @@ export default function Chat({ username }) {
         </div>
       </Messages>
       <MessageForm id="form" onSubmit={(event) => { handleSubmit(event); }}>
-        <MessageInput id="input" type="text" value={message} placeholder="Send a message" autocomplete="off" onChange={(event) => { setMessage(event.target.value); }} />
+        <MessageInput id="input" type="text" value={message} placeholder="Send a message" autoComplete="off" onChange={(event) => { setMessage(event.target.value); }} />
         <SendButtonWrapper>
           <BsFillArrowUpCircleFill onClick={(event) => { handleSubmit(event); }} />
         </SendButtonWrapper>
