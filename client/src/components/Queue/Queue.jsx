@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Track from './Track.jsx';
 
-export default function Queue ({ queue, username, token }) {
+export default function Queue ({ queue, username, token, currentUri, setQueue }) {
 
-  // songInfo = {
-  //   name: 'Celebrity',
-  //   artist: 'IU',
-  //   imageUrl: "https://i.scdn.co/image/ab67616d0000b2734ed058b71650a6ca2c04adff",
-  //   audioUrl: "https://open.spotify.com/track/5nCwjUUsmBuNZKn9Xu10Os"
-  // }
 
-  // useEffect (() => {
-  // setSongList([...songList, songInfo])
-  // }, [songInfo])
+  useEffect(() => {
+    if (queue.length > 0) {
+      // if (queue[0].uri === currentUri) {
+        console.log('---queue before shift', queue);
+        const newQueue = queue.filter(item=>item.uri !== currentUri );
+        // queue.shift();
+        console.log('---queue after shift', newQueue)
+        setQueue(newQueue);
+      // }
+    }
+  }, [currentUri]);
 
   return (
     <Container className='Queue'>
