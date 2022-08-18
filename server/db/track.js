@@ -8,7 +8,8 @@ const trackSchema = mongoose.Schema({
   artist: String,
   uri: String,
   likes: [String],
-  dislikes: [String]
+  dislikes: [String],
+  roomCode: String,
 });
 
 

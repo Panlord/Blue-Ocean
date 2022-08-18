@@ -1,9 +1,12 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import Login from './login.jsx';
-import Room from './Room.jsx';
+import AdminRoom from './AdminRoom.jsx';
+import UserRoom from './UserRoom.jsx';
 import '../App.css';
 
 function Landing({ username, setUsername, device_id, setDevice_id }) {
+  const [roomCode, setRoomCode] = useState('');
   const [token, setToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
 
@@ -18,13 +21,16 @@ function Landing({ username, setUsername, device_id, setDevice_id }) {
       }
     }
 
+    // HAVE A FUNCTION TO SET A ROOM CODE HERE
+    // TODO
+
     getToken();
   }, []);
 
   return (
-    <>
-      { (token === '') ? <Login/> : <Room token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} />}
-    </>
+    <div>
+      { (token === '') ? <Login /> : (window.location.href.indexOf('roomID=') !== -1 ? <UserRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} roomCode={roomCode} /> : <AdminRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} roomCode={roomCode} />) }
+    </div>
   );
 }
 

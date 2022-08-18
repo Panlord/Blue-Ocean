@@ -26,12 +26,14 @@ module.exports = {
 
     var state = generateRandomString(16);
 
+
     var auth_query_parameters = new URLSearchParams({
     response_type: "code",
     client_id: spotify_client_id,
     scope: scope,
     redirect_uri: "http://localhost:3001/auth/callback",
-    state: state
+    state: state,
+    roomID: req.query.roomID,
     })
 
     res.redirect('https://accounts.spotify.com/authorize/?' + auth_query_parameters.toString());
