@@ -6,7 +6,7 @@ import SearchBar from '../SearchBar/SearchBar.jsx';
 import Player from '../player.jsx';
 import Chat from '../Chat/Chat.jsx';
 
-export default function Room({ token, refreshToken, username, setUsername, device_id, setDevice_id }) {
+export default function UserRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id }) {
   const [queue, setQueue] = useState([
     {
       songName: 'Celebrity',
