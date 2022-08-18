@@ -126,7 +126,7 @@ function WebPlayback(props) {
           roomCode: props.roomCode,
           paused: state.paused,
           position: state.position,
-          currentSong: state.track_window.current_track.uri
+          currentSong: state.track_window.current_track.uri // <--------- These might need renaming
         };
         return roomData;
       })
