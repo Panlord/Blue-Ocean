@@ -51,13 +51,12 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
         console.log('song added to db: ', response)
       })
       .catch((err) => console.log(err))
-
   };
 
   return (
     <Container>
       <SearchForm>
-        <Input type="text" name="search" placeholder="Choose a song..." value={searchEntry} onChange={searchChange} />
+        <Input type="text" name="search" placeholder="Songs, artists..." value={searchEntry} onChange={searchChange} />
         <SearchIcon>
           <i className="fa fa-search" />
         </SearchIcon>
@@ -65,12 +64,15 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
         <SearchResult>
           {songs.map((song) => (
             <SongContainer onClick={(e) => {
-                addToQueue(e, song);
-                setSearchEntry('');
-                }}>
-              <img alt="" src={song.album.images[0].url} width="50" />
+              setSearchEntry('');
+              addToQueue(e, song);
+            }}>
+              <img alt="" src={song.album.images[0].url} width="50" style={{borderRadius: "4px"}}/>
               <List key={song.id}>
-                {`${song.name} - ${song.artists[0].name}`}
+                <div style={{display:"flex", flexDirection:"column", alignItems: "stretch"}}>
+                  <div style={{display:"flex", fontSize:"1em"}}>{song.name}</div>
+                  <div style={{display:"flex", fontSize: "x-small"}}>{song.artists[0].name}</div>
+                </div>
               </List>
               <AddButton />
             </SongContainer>
@@ -96,6 +98,7 @@ const SearchForm = styled.form`
   flex-grow: 1;
   background-color: #D9D9D9;
   width: 100%;
+  border: 2px solid #022B3A;
   border-radius: 5px;
 `;
 
@@ -130,7 +133,7 @@ const SearchResult = styled.ul`
   padding: 0;
   overflow: hidden;
   border-radius: 3px;
-  color: white;
+  color: #CEE5F2;
   background-color: #333;
 `;
 
@@ -140,14 +143,14 @@ const SongContainer = styled.div`
   align-items: center;
   flex-direction: row;
   padding-bottom: 2px;
-  padding-left: 6px;
+  padding-left: 10px;
   padding-top: 6px;
   border-radius: 20px;
   border-left: 1px solid #70CAD1;
   border-right: 1px solid #70CAD1;
   border-bottom: 1px solid #70CAD1;
   &:hover {
-    color: #FFF;
+    color: #022B3A;
     background-color: #70CAD1;
     cursor: pointer;
   };
