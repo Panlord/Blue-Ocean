@@ -15,7 +15,7 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
         q: searchEntry,
         type: 'track',
         market: 'US',
-        limit: 5,
+        limit: 20,
       },
     };
     axios(options)
@@ -56,28 +56,30 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
   return (
     <Container>
       <SearchForm>
-        <Input type="text" name="search" placeholder="Songs, artists..." value={searchEntry} onChange={searchChange} />
-        <SearchIcon>
-          <i className="fa fa-search" />
-        </SearchIcon>
+				<InputWrapper>
+					<i className="fa fa-search" style={{color: "#70CAD1"}}/>
+					<Input type="text" name="search" placeholder="Songs, artists..." value={searchEntry} onChange={searchChange} />
+				</InputWrapper>
         {searchEntry.length ?
-        <SearchResult>
-          {songs.map((song) => (
-            <SongContainer onClick={(e) => {
-              setSearchEntry('');
-              addToQueue(e, song);
-            }}>
-              <img alt="" src={song.album.images[0].url} width="50" style={{borderRadius: "4px"}}/>
-              <List key={song.id}>
-                <div style={{display:"flex", flexDirection:"column", alignItems: "stretch"}}>
-                  <div style={{display:"flex", fontSize:"1em"}}>{song.name}</div>
-                  <div style={{display:"flex", fontSize: "x-small"}}>{song.artists[0].name}</div>
-                </div>
-              </List>
-              <AddButton />
-            </SongContainer>
-          ))}
-        </SearchResult> : <></>
+				<ScrollContainer>
+					<SearchResult>
+						{songs.map((song) => (
+							<SongContainer onClick={(e) => {
+								setSearchEntry('');
+								addToQueue(e, song);
+							}}>
+								<img alt="" src={song.album.images[0].url} width="50" style={{borderRadius: "4px"}}/>
+								<List key={song.id}>
+									<SongDetail>
+										<SongName>{song.name}</SongName>
+										<Artist>{song.artists[0].name}</Artist>
+									</SongDetail>
+								</List>
+								<AddButton />
+							</SongContainer>
+						))}
+					</SearchResult>
+				</ScrollContainer> : <></>
         }
       </SearchForm>
     </Container>
@@ -91,50 +93,54 @@ const Container = styled.div`
 `;
 
 const SearchForm = styled.form`
-  width: 100%;
-  height: 36px;
   display: flex;
+	flex-direction: column;
   position: relative;
   flex-grow: 1;
-  background-color: #D9D9D9;
-  width: 100%;
-  border: 2px solid #022B3A;
-  border-radius: 5px;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+	width: 500px;
+	height: 50px;
+	background-color: white;
+	border-radius: 10px;
+	flex-direction: row;
+	align-items: center;
+	padding: 20px;
 `;
 
 const Input = styled.input`
-  width: 100%;
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 0 8px 15px;
-  color: #022B3A;
-  background-color: #D9D9D9;
-  font-size: 18px;
+	flex: 1;
+	height: 40px;
+	border: none;
+	outline: none;
+	font-size: 18px;
+	padding-left: 10px;
 `;
 
-const SearchIcon = styled.div`
+const ScrollContainer = styled.div`
+  width: 100%;
+  height: 396px;
+  position: relative;
   display: flex;
-  font-size: 20px;
-  justify-content: center;
   align-items: center;
-  padding: 0 15px;
-  border-radius: 5px;
-  color: #022B3A;
-  cursor: pointer;
 `;
 
 const SearchResult = styled.ul`
-  position: absolute;
-  top: 36px;
-  left: 0;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  border-radius: 3px;
+  width: 500px;
+  height: 100%;
+	border-radius: 3px;
   color: #CEE5F2;
   background-color: #333;
+	white-space: nowrap;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  align-items: center;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SongContainer = styled.div`
@@ -165,6 +171,24 @@ const List = styled.li`
   height: 90px;
   border-radius: 3px;
   font-size: 17px;
+`;
+
+const SongDetail = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  alignItems: stretch;
+`;
+
+const SongName = styled.div`
+  display: flex;
+  font-size: 1em;
+  width: 350px;
+`;
+
+const Artist = styled.div`
+ display: flex;
+ font-size: x-small;
 `;
 
 const AddButton = styled(FiPlusCircle)`
