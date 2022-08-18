@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
 
   socket.on('new-user', (name) => {
     user[socket.id] = name;
-    console.log('this is the name', name);
+    // console.log('this is the name', user,name);
     io.emit('user-connected', name);
   });
 
