@@ -98,6 +98,7 @@ const SearchForm = styled.form`
   display: flex;
 	flex-direction: column;
   position: relative;
+  align-items: center;
   flex-grow: 1;
 `;
 
@@ -132,9 +133,10 @@ const ScrollContainer = styled.div`
 const SearchResult = styled.ul`
   width: 500px;
   height: 100%;
+  margin: auto;
 	border-radius: 3px;
   color: #CEE5F2;
-  background-color: #333;
+  background-color: #022B3A;
 	white-space: nowrap;
   overflow-x: scroll;
   scrollbar-width: none;
