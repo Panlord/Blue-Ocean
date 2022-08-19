@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { IoIosPause } from "react-icons/io";
 import { BsPlayFill } from "react-icons/bs";
 import { FaCopy }from'react-icons/fa';
+import { RiDownloadLine } from 'react-icons/ri';
+import { RiSkipForwardLine } from 'react-icons/ri';
 
 const track = {
   name: '',
@@ -269,98 +271,118 @@ const RoomCodeLink = styled.div`
 `
 
 const ButtonsContainer = styled.div`
-display: flex;
-align-items: center;
-margin-top: 10px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 `
 
-const Skip = styled.div`
-color: white;
-font-size: 25px;
-cursor: pointer;
-margin: 7px;
+const Skip = styled(RiSkipForwardLine)`
+  height: 30;
+  width: 30px;
+  border-radius: 50%;
+  border: 2px solid #D9D9D9;
+  background-color: #0D1317;
+  color: #D9D9D9;
+  font-size: 25px;
+  cursor: pointer;
+  margin: 7px;
 
   &:hover {
-    color: #0D1317;
+    color: #D9D9D9;
+    background-color: #0D1317;
+    transform: scale(1.1);
   };
 `
-const Save = styled.div`
-color: white;
-font-size: 25px;
-cursor: pointer;
-margin: 7px;
+const Save = styled(RiDownloadLine)`
+  height: 30;
+  width: 30px;
+  border-radius: 50%;
+  border: 2px solid #D9D9D9;
+  background-color: #0D1317;
+  color: #D9D9D9;
+  font-size: 25px;
+  cursor: pointer;
+  margin: 7px;
 
-&:hover {
-  color: #0D1317;
-};
+  &:hover {
+    color: #D9D9D9;
+    background-color: #0D1317;
+    transform: scale(1.1);
+  };
 `
 
 const Pause = styled(IoIosPause)`
-border: 1px solid black;
-border-radius: 50%;
-height: 50px;
-width: 50px;
-padding: 5px;
-color: #0D1317;
-background-color: #D9D9D9;
-margin: 10px;
-cursor: pointer;
+  border: 2px solid #0D1317;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  padding: 5px;
+  color: #0D1317;
+  background-color: #D9D9D9;
+  margin: 10px;
+  cursor: pointer;
 
-&:hover {
-  color: #D9D9D9;
-  background-color: #0D1317;
+  &:hover {
+    color: #D9D9D9;
+    background-color: #0D1317;
+    border: 2px solid #70CAD1;
 };
 `
 
 const Play = styled(BsPlayFill)`
-border: 1px solid black;
-border-radius: 50%;
-height: 50px;
-width: 50px;
-padding-left: 3px;
-color: #0D1317;
-background-color: #D9D9D9;
-margin: 10px;
-cursor: pointer;
+  border: 2px solid #0D1317;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  padding-left: 3px;
+  color: #0D1317;
+  background-color: #D9D9D9;
+  margin: 10px;
+  cursor: pointer;
 
-&:hover {
-  color: #D9D9D9;
-  background-color: #0D1317;
-};
+  &:hover {
+    color: #D9D9D9;
+    background-color: #0D1317;
+    border: 2px solid #70CAD1;
+  };
 `
 
 
 const Container = styled.div`
-align-items: center;
-display: flex;
-justify-content: center;
-height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  position: fixed;
+  top: 100px;
+  left: 0;
+  right: 0;
 `
 
 const MainWrapper = styled.div`
-align-items: center;
-display: flex;
-flex-direction: column;
-height: 100%;
-margin: 0 auto;
-justify-content: center;
-width: 80%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  width: 80%;
 `
 
 const SongImg = styled.img`
-border: 2px solid black;
-border-radius: 10px;
-width: 25vw;
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 25vw;
 `
 
 const SongInfo = styled.div`
-font-size: 30px;
-margin: 20px;
-text-align: center;
+  font-size: 30px;
+  margin: 20px;
+  text-align: center;
 `
 
 const AddedBy = styled.div`
-font-size: 20px;
+  font-size: 20px;
 `
 
 export default WebPlayback;
