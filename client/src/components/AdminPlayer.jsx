@@ -296,10 +296,14 @@ cursor: pointer;
 
 
 const Container = styled.div`
-align-items: center;
-display: flex;
-justify-content: center;
-height: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  position: fixed;
+  top: 100px;
+  left: 0;
+  right: 0;
 `
 
 const MainWrapper = styled.div`
