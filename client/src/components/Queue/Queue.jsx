@@ -24,28 +24,32 @@ export default function Queue ({ queue, username, token, currentUri, setQueue })
 
   return (
     <Container className='Queue'>
-      <QueueContainer>
+
         {queue.map((item, index) => (
           <Track track={item} key={index} username={username} token={token} />
         ))}
-      </QueueContainer>
+
     </Container>
   )
 }
 
 const Container = styled.div`
-width: 270px;
-height: 900px;
+min-width: 16vw;
+height: 90vh;
 border: 1px solid black;
 border-radius: 20px;
-background-color: #3A4965;
+background-color: #0D1317;
 // overflow: scroll;
-`
-
-const QueueContainer = styled.div`
 display: flex;
 flex-direction: column;
-width: 250px;
-// height: auto;
-margin: 10px;
+margin-left: 40px;
+margin-top: 40px;
 `
+
+// const QueueContainer = styled.div`
+// display: flex;
+// flex-direction: column;
+// width: 250px;
+// // height: auto;
+// margin: 10px;
+// `

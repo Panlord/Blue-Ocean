@@ -5,6 +5,7 @@ import Queue from '../Queue/Queue.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import AdminPlayer from '../AdminPlayer.jsx';
 import Chat from '../Chat/Chat.jsx';
+import logo from "../../../dist/SONAR_logo.png";
 
 const generateRandomString = (length) => {
   let text = '';

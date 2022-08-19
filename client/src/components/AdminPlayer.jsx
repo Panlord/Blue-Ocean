@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from "styled-components";
+import { IoIosPause } from "react-icons/io";
+import { BsPlayFill } from "react-icons/bs";
 
 const track = {
   name: '',
@@ -203,30 +205,127 @@ function WebPlayback(props) {
       });
   }, 5000);
 
+  const saveTrack = (uri) => {
+    let songId = uri.slice(14)
+    console.log('--song ID--: ', songId)
+    console.log('--TOKEN--: ', props.token)
+    axios.put(`https://api.spotify.com/v1/me/tracks?ids=${songId}`, null, { headers: { Authorization: `Bearer ${props.token}` } })
+      .then((response) => {
+        console.log('track saved! ', response)
+      })
+      .catch((err) => console.log('error saving track', err))
+  }
+
   return (
-    <div className="container">
-      <div className="main-wrapper">
-        <div>Added By: {user}
-        <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
-        </div>
-        <div className="now-playing__side">
-          <div className="now-playing__name">{current_track.name}</div>
-          <div className="now-playing__artist">{current_track.artists[0].name}</div>
-          {/* <button className="btn-spotify" type="button" onClick={() => { player.previousTrack(); }}>
-            &lt;&lt;
-          </button> */}
-          <button className="btn-spotify" type="button" onClick={() => { handleTogglePlay(is_paused); }}> {/* this used to be player.togglePlay(); */}
-            { is_paused ? 'PLAY' : 'PAUSE' }
-          </button>
-          <button className="btn-spotify" type="button" onClick={() => { handleSkip(); }}> {/* this used to be player.nextTrack() */}
-            &gt;&gt;
-          </button>
-        </div>
-      </div>
-    </div>
+    <Container>
+      <MainWrapper>
+        <SongImg src={current_track.album.images[0].url} />
+          <SongInfo>{current_track.artists[0].name} - {current_track.name}</SongInfo>
+          <AddedBy>added by {user}</AddedBy>
+          <ButtonsContainer>
+          <Save onClick={() => {saveTrack(current_track.uri)}}>Save</Save>
+          { is_paused ? <Play onClick={() => { handleTogglePlay(is_paused); }}/> : <Pause onClick={() => { handleTogglePlay(is_paused); }}/>}
+          <Skip onClick={() => { handleSkip(); }}>Skip</Skip>
+          </ButtonsContainer>
+      </MainWrapper>
+    </Container>
   );
 }
 
 
+const ButtonsContainer = styled.div`
+display: flex;
+align-items: center;
+margin-top: 10px;
+`
+
+const Skip = styled.div`
+color: white;
+font-size: 25px;
+cursor: pointer;
+margin: 7px;
+
+  &:hover {
+    color: #0D1317;
+  };
+`
+const Save = styled.div`
+color: white;
+font-size: 25px;
+cursor: pointer;
+margin: 7px;
+
+&:hover {
+  color: #0D1317;
+};
+`
+
+const Pause = styled(IoIosPause)`
+border: 1px solid black;
+border-radius: 50%;
+height: 50px;
+width: 50px;
+padding: 5px;
+color: #0D1317;
+background-color: #D9D9D9;
+margin: 10px;
+cursor: pointer;
+
+&:hover {
+  color: #D9D9D9;
+  background-color: #0D1317;
+};
+`
+
+const Play = styled(BsPlayFill)`
+border: 1px solid black;
+border-radius: 50%;
+height: 50px;
+width: 50px;
+padding-left: 3px;
+color: #0D1317;
+background-color: #D9D9D9;
+margin: 10px;
+cursor: pointer;
+
+&:hover {
+  color: #D9D9D9;
+  background-color: #0D1317;
+};
+`
+
+
+const Container = styled.div`
+align-items: center;
+display: flex;
+justify-content: center;
+height: 100%;
+`
+
+const MainWrapper = styled.div`
+align-items: center;
+display: flex;
+flex-direction: column;
+height: 100%;
+margin: 0 auto;
+justify-content: center;
+width: 80%;
+`
+
+const SongImg = styled.img`
+border: 2px solid black;
+border-radius: 10px;
+width: 25vw;
+`
+
+const SongInfo = styled.div`
+font-size: 30px;
+margin: 20px;
+text-align: center;
+`
+
+const AddedBy = styled.div`
+font-size: 20px;
+`
 
 export default WebPlayback;

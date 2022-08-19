@@ -51,8 +51,10 @@ export default function Track({ track, username, token }) {
       <SongContainer>
         <SongImage src={track.songImg} />
         <InnerContainer>
-          <ArtistName>{track.artist}</ArtistName>
           <SongName>{track.songName}</SongName>
+          <ArtistName>{track.artist}</ArtistName>
+          <BottomContainer>
+          <AddedBy>Added By: {username}</AddedBy>
           <ThumbsContainer>
             <LikesContainer>
               <ThumbsUp onClick={() => handleLike("like")} />
@@ -63,7 +65,7 @@ export default function Track({ track, username, token }) {
               <Count>{dislikeCount}</Count>
             </LikesContainer>
           </ThumbsContainer>
-          <AddedBy>Added By: {username}</AddedBy>
+          </BottomContainer>
         </InnerContainer>
       </SongContainer>
     </div>
@@ -71,15 +73,19 @@ export default function Track({ track, username, token }) {
 }
 
 const AddedBy = styled.div`
-font-size: 15px;
-color: black;
+margin-top: 5px;
+font-size: 10px;
+color: white;
 `
+
+const BottomContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 160px;
+`;
 
 const ThumbsContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
-  padding-right: 7px;
-
 `;
 
 const LikesContainer = styled.div`
@@ -94,8 +100,8 @@ const Count = styled.div`
   font-size: 11px;
   height: 10px;
   width: 10px;
-  border: 1px solid black;
-  border-radius: 50%;
+  // border: 1px solid black;
+  // border-radius: 50%;
   color: black;
 `;
 
@@ -103,21 +109,22 @@ const SongContainer = styled.div`
   border: 1px solid black;
   border-radius: 10px;
   display: flex;
-  margin-bottom: 10px;
-  background-color: #BACCEB;
+  margin: 10px 10px 0px 10px;
+  background-color: #1F7A8C;
+
 `;
 
 const InnerContainer = styled.div`
   margin-top: 10px;
 `;
-const ArtistName = styled.div`
-color: black;
+const SongName = styled.div`
+color: white;
 font-size: 20px;
 `;
 
-const SongName = styled.div`
-font-size: 15px;
-color: black;
+const ArtistName = styled.div`
+font-size: 14px;
+color: #b1a7a796;
 `;
 
 const SongImage = styled.img`
@@ -132,10 +139,18 @@ const ThumbsUp = styled(FaThumbsUp)`
   height: 15px;
   width: 15px;
   color: black;
+  cursor: pointer;
+  &:hover {
+    color: #b1a7a796;
+  };
 `;
 
 const ThumbsDown = styled(FaThumbsDown)`
   height: 15px;
   width: 15px;
   color: black;
+  cursor: pointer;
+  &:hover {
+    color: #b1a7a796;
+  };
 `;
