@@ -6,7 +6,7 @@ import UserRoom from './UserRoom.jsx';
 import '../App.css';
 
 function Landing({ username, setUsername, device_id, setDevice_id }) {
-  const [roomCode, setRoomCode] = useState('');
+  const [roomID, setRoomID] = useState('');
   const [token, setToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
 
@@ -21,15 +21,19 @@ function Landing({ username, setUsername, device_id, setDevice_id }) {
       }
     }
 
-    // HAVE A FUNCTION TO SET A ROOM CODE HERE
-    // TODO
+    // Function to get the room ID from the query string
+    async function getRoomID() { // This my not need to be async actually
+      const queryParams = new URLSearchParams(window.location.search);
+      setRoomID(queryParams.get('roomID'));
+    }
 
     getToken();
+    getRoomID();
   }, []);
 
   return (
     <div>
-      { (token === '') ? <Login /> : (window.location.href.indexOf('roomID=') !== -1 ? <UserRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} roomID={window.location.href.slice(window.location.href.indexOf('roomID=')+7, window.location.href.indexOf('&'))}/> : <AdminRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id}  />) }
+      { (token === '') ? <Login roomID={roomID} /> : (window.location.href.indexOf('roomID=') !== -1 ? <UserRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} roomID={roomID}/> : <AdminRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id}  />) }
     </div>
   );
 }

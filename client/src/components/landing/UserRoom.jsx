@@ -46,6 +46,7 @@ export default function UserRoom({ token, refreshToken, username, setUsername, d
         <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} currentUri={currentUri} setCurrentUri={setCurrentUri} />
       </div>
       <Chat username={username} />
+      <div>USER ROOM BABY</div>
     </RoomContainer>
   );
 }

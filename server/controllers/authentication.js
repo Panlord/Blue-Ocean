@@ -26,18 +26,29 @@ module.exports = {
 
     var state = generateRandomString(16);
 
+    let redirectURI = 'http://localhost:3001/auth/callback';
+    if (req.query.roomID) {
+      redirectURI = `http://localhost:3001/auth/join/callback`;
+    }
 
     var auth_query_parameters = new URLSearchParams({
-    response_type: "code",
-    client_id: spotify_client_id,
-    scope: scope,
-    redirect_uri: "http://localhost:3001/auth/callback",
-    state: state,
-    roomID: req.query.roomID,
-    })
-
-    res.redirect('https://accounts.spotify.com/authorize/?' + auth_query_parameters.toString());
-    },
+      response_type: "code",
+      client_id: spotify_client_id,
+      scope: scope,
+      redirect_uri: redirectURI,
+      state: state,
+      roomID: req.query.roomID,
+    });
+    console.log('AUTH SHET', auth_query_parameters);
+    if (req.query.roomID) {
+      console.log('GOT IN HERE');
+      console.log(auth_query_parameters);
+      res.redirect('https://accounts.spotify.com/authorize/?' + auth_query_parameters.toString());
+    } else {
+      console.log('GOT IN THERE');
+      res.redirect('https://accounts.spotify.com/authorize/?' + auth_query_parameters.toString());
+    }
+  },
 
 
 

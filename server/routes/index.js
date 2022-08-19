@@ -14,6 +14,7 @@ const Room = require('../db/room.js');
 //console.log(controller, 'controllers');
 router.get('/auth/login', controller.authentication.get);
 router.get('/auth/callback', controller.authenticationCallback.get);
+router.get('/auth/join/callback', controller.nonHostAuthenticationCallback.get); // Route for authentication of a non-host user
 router.get('/auth/token', controller.getToken.get);
 router.put('/room', controller.roomController.put);
 router.post('/room', controller.roomController.post);
