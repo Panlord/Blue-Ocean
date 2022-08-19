@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import logo from "../../../dist/SONAR_logo.png";
-import { useSearchParams } from 'react-router-dom';
-
 
 function Login({ roomID }) {
 
