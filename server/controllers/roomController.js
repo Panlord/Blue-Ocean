@@ -3,8 +3,10 @@ const Track = require('../db/track.js');
 
 const put = (req, res) => {
   Room.findOneAndUpdate(
-    { roomID: req.body.roomID }, { '$set': { position: req.body.position, playingSong: req.body.playingSong, paused: req.body.paused } }
-  );
+    { roomID: req.body.roomID }, { position: req.body.position, playingSong: req.body.playingSong, paused: req.body.paused }
+  )
+  .then(() => res.status(201).send('successfully bangbangbanged room'))
+  .catch((error) => { console.log(error) });
   // if (req.body.playingSong === undefined) {
   //   Room.findOneAndUpdate({ roomID: req.body.roomID }, { position: req.body.position })
   //     .then(() => res.status(200).send('successfully updated song position'))

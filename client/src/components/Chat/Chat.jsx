@@ -77,7 +77,7 @@ export default function Chat({ username }) {
     if (event.keyCode === 13) {
       handleSubmit(event);
     }
-  }
+  };
 
   return (
     <ChatContainer>

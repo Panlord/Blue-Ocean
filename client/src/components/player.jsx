@@ -155,7 +155,7 @@ function WebPlayback(props) {
       .catch((error) => {
         console.log('Error occurred when attempting to PUT room data to server:', error);
       });
-  }
+  };
 
   // Host presses NEXT (or >>) button to skip to next song on player
   const handleSkip = () => {
@@ -181,7 +181,27 @@ function WebPlayback(props) {
       .catch((error) => {
         console.log('Error occurred when attempting to PUT room data to server:', error);
       });
-  }
+  };
+
+  setInterval(() => {
+    console.log('2.5 sec room state update!');
+    player.getCurrentState()
+      .then((state) => {
+        let roomData = {
+          roomID: props.roomID,
+          paused: state.paused,
+          position: state.position,
+          playingSong: state.track_window.current_track.uri
+        };
+        return roomData;
+      })
+      .then((roomData) => {
+        return axios.put('/room', roomData);
+      })
+      .catch((error) => {
+        console.log('Error occurred when attempting to PUT room data to server:', error);
+      });
+  }, 2500);
 
   return (
     <div className="container">
