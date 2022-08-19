@@ -4,6 +4,7 @@ import axios from 'axios';
 import styled from "styled-components";
 import { IoIosPause } from "react-icons/io";
 import { BsPlayFill } from "react-icons/bs";
+import { FaCopy }from'react-icons/fa';
 import { RiDownloadLine } from 'react-icons/ri';
 import { RiSkipForwardLine } from 'react-icons/ri';
 
@@ -28,6 +29,7 @@ function WebPlayback(props) {
     const [device_id, setDevice_id] = useState('');
     const [playlist_uri, setPlaylist_uri] = useState('');
     const [user, setUser] = useState('');
+    const [isCopied, setIsCopied] = useState(false);
 
     const setUri = (uri) => {
       props.setCurrentUri(uri);
@@ -218,6 +220,14 @@ function WebPlayback(props) {
       .catch((err) => console.log('error saving track', err))
   }
 
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(`http://localhost:3001/?roomID=${props.roomID}`);
+    setIsCopied(true);
+    setTimeout(() => {
+      setIsCopied(false)
+    }, 2000);
+  }
+
   return (
     <Container>
       <MainWrapper>
@@ -229,11 +239,36 @@ function WebPlayback(props) {
           { is_paused ? <Play onClick={() => { handleTogglePlay(is_paused); }}/> : <Pause onClick={() => { handleTogglePlay(is_paused); }}/>}
           <Skip onClick={() => { handleSkip(); }}>Skip</Skip>
           </ButtonsContainer>
+          <RoomCodeLink
+            onClick={() => handleCopyLink()}
+            style={{ backgroundColor: isCopied ? '#70CAD1' : 'white'}}
+          >
+            <div style={{marginRight: '4px', marginTop: '1px'}}>
+              <FaCopy size={15}/>
+            </div>
+            {isCopied ? 'COPIED!' : 'COPY ROOM LINK'}
+          </RoomCodeLink>
       </MainWrapper>
     </Container>
   );
 }
 
+const RoomCodeLink = styled.div`
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  border-radius: 5px;
+  margin-top: 20px;
+  box-sizing: border-box;
+  padding: 10px;
+
+    &:hover {
+      background-color: #70CAD1;
+      opacity: 0.5;
+    };
+`
 
 const ButtonsContainer = styled.div`
   display: flex;
