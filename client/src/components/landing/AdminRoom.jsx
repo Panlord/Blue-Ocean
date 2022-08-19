@@ -16,10 +16,6 @@ const generateRandomString = (length) => {
   return text;
 };
 
-<<<<<<< HEAD
-export default function AdminRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id }) {
-  const [queue, setQueue] = useState([]);
-=======
 export default function AdminRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id, roomID, setRoomID }) {
 
   const [currentUri, setCurrentUri] = useState('');
@@ -29,7 +25,6 @@ export default function AdminRoom({ token, refreshToken, username, setUsername, 
   useEffect(() => {
     setRoomID(generateRandomString(4));
   }, []);
->>>>>>> main
 
   return (
     <RoomContainer className="roomContainer">
