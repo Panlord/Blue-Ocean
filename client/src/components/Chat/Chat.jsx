@@ -77,15 +77,16 @@ export default function Chat({ username }) {
     if (event.keyCode === 13) {
       handleSubmit(event);
     }
-  }
+  };
 
   return (
     <ChatContainer>
-      {/* <UserFace id="face">
+      <UserFace id="face">
         <div>{group.map((pic, index) => {
-          return <span>{pic}</span>
+          return <Face>{pic}</Face>
         })}</div>
-      </UserFace> */}
+      </UserFace>
+      <Bar></Bar>
       <Messages id="messages">
         <div>
           {listOfMessages.map((msg, index) => {
@@ -99,15 +100,7 @@ export default function Chat({ username }) {
         </div>
       </Messages>
       <MessageForm id="form" onSubmit={(event) => { handleSubmit(event); }}>
-        <MessageTextarea
-          id="textarea"
-          type="text"
-          value={message}
-          placeholder="Send a message"
-          autocomplete="off"
-          onKeyDown={(event) => onKeyDown(event)}
-          onChange={(event) => { setMessage(event.target.value); }}
-        />
+        <MessageInput id="input" type="text" value={message} placeholder="Send a message" autoComplete="off" onChange={(event) => { setMessage(event.target.value); }} />
         <SendButtonWrapper>
           <BsFillArrowUpCircleFill size={40} onClick={(event) => { handleSubmit(event); }} />
         </SendButtonWrapper>
@@ -153,14 +146,16 @@ const MessageForm = styled.form`
   flex-direction: row;
   margin: 16px 8px 8px 8px;
   position: relative;
+  max-width: 70vw;
 `;
-const MessageTextarea = styled.textarea`
+const MessageInput = styled.textarea`
   background: #D9D9D9;
   border-radius: 10px;
   color: black;
   font-size: 24px;
   resize: none;
   flex-grow: 1;
+  overflow: auto;
 `;
 // // Perhaps turn this sendbuttonwrapper into inline styling for the BsFillArrowUpCircleFill
 // const SendButtonWrapper = styled.div`
@@ -179,10 +174,35 @@ const UserFace = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  width: 90vw;
-  height: 15vh;
-  background: blue;
+  overflow: auto;
+  min-height: 15vh;
+  background: #333;
   border: 2px solid #000000;
   border-radius: 20px;
+  margin-top: 5px;
+  margin-left: 2px;
+  margin-right:2px
 `;
 
+const Bar = styled.div `
+  display: flex;
+  overflow: auto;
+  min-height: 1vh;
+  background: #333;
+  border: 2px solid #000000;
+  border-radius: 20px;
+  margin-top: 5px;
+  margin-left: 2px;
+  margin-right:2px
+`
+
+const Face = styled.span `
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  background: #333;
+  border: 2px solid #000000;
+  border-radius: 50%;
+  text-align: center;
+  margin: 5px 5px 5px 5px;
+`

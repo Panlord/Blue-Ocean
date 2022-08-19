@@ -13,13 +13,14 @@ const Room = require('../db/room.js');
 
 //console.log(controller, 'controllers');
 router.get('/auth/login', controller.authentication.get);
-router.get('/auth/callback', controller.authenticationCallback.get);
+router.get('/auth/callback', controller.authentication.callbackGet);
+router.get('/auth/join/callback', controller.nonHostAuthenticationCallback.get); // Route for authentication of a non-host user
 router.get('/auth/token', controller.getToken.get);
 router.put('/room', controller.roomController.put);
 router.post('/room', controller.roomController.post);
 router.get('/room', controller.roomController.get);
 router.post('/addToQueue', (req, res) => {
-  // console.log('req.body',req.body);
+  console.log('req.body',req.body);
   Track.create(req.body)
     .then((response) => {
       console.log('req.body: ', req.body);

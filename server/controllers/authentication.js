@@ -1,9 +1,8 @@
 const dotenv = require('dotenv').config();
+var models = require ('./../models');
 
 var spotify_client_id = process.env.SPOTIFY_CLIENT_ID;
 var spotify_client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-
-//console.log( process.env.SPOTIFY_CLIENT_ID,process.env.SPOTIFY_CLIENT_SECRET, 'secrets')
 
 var generateRandomString = function (length) {
   var text = '';
@@ -15,6 +14,7 @@ var generateRandomString = function (length) {
   return text;
 };
 
+var roomID = '';
 
 module.exports = {
   get : (req, res) => {
@@ -27,19 +27,39 @@ module.exports = {
 
     var state = generateRandomString(16);
 
+    let redirectURI = 'http://localhost:3001/auth/callback';
 
     var auth_query_parameters = new URLSearchParams({
-    response_type: "code",
-    client_id: spotify_client_id,
-    scope: scope,
-    redirect_uri: "http://localhost:3001/auth/callback",
-    state: state,
-    roomID: req.query.roomID,
-    })
+      response_type: "code",
+      client_id: spotify_client_id,
+      scope: scope,
+      redirect_uri: redirectURI,
+      state: state,
+      roomID: req.query.roomID,
+    });
+    if (req.query.roomID) {
+      roomID = req.query.roomID;
+    }
 
     res.redirect('https://accounts.spotify.com/authorize/?' + auth_query_parameters.toString());
-    },
 
+  },
 
+  callbackGet : (req, res ) => {
+    console.log(req.query.state, 'state item IN BOOGALOO AUTH'); // user has state
+    console.log(req.query);
+    models.authenticationCallback(req.query.code, req.query.state, (err, results) => {
+      if (err) {
+        console.log(err, 'auth error');
+      } else {
+        if (roomID.length > 0) {
+          res.redirect(`/?roomID=${roomID}&authCode=${req.query.state}`);
+          roomID = '';
+        } else {
+          res.redirect(`/?authCode=${req.query.state}`);
+        }
+      }
+    })
+  }
 
 }

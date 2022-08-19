@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FiPlusCircle } from 'react-icons/fi';
 import axios from 'axios';
 
-export default function SearchBar({ setQueue, username, token, deviceID }) {
+export default function SearchBar({ setQueue, username, token, deviceID, roomID }) {
   const [searchEntry, setSearchEntry] = useState('');
   const [songs, setSongs] = useState([]);
 
@@ -15,7 +15,7 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
         q: searchEntry,
         type: 'track',
         market: 'US',
-        limit: 5,
+        limit: 20,
       },
     };
     axios(options)
@@ -38,9 +38,10 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
       songImg: song.album.images[0].url,
       artist: song.album.artists[0].name,
       uri: song.uri,
+      roomID: roomID,
     };
     setQueue((prev) => [...prev, queueData]);
-    console.log('---deviceID---', deviceID.device_id)
+    console.log('---deviceID---', deviceID.device_id);
     axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${deviceID.device_id}&uri=${song.uri}`, null, { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => {
         console.log('post to player response ', response)
@@ -51,31 +52,35 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
         console.log('song added to db: ', response)
       })
       .catch((err) => console.log(err))
-
   };
 
   return (
     <Container>
       <SearchForm>
-        <Input type="text" name="search" placeholder="Choose a song..." value={searchEntry} onChange={searchChange} />
-        <SearchIcon>
-          <i className="fa fa-search" />
-        </SearchIcon>
+				<InputWrapper>
+					<i className="fa fa-search" style={{color: "#70CAD1"}}/>
+					<Input type="text" name="search" placeholder="Songs, artists..." value={searchEntry} onChange={searchChange} />
+				</InputWrapper>
         {searchEntry.length ?
-        <SearchResult>
-          {songs.map((song) => (
-            <SongContainer onClick={(e) => {
-                addToQueue(e, song);
-                setSearchEntry('');
-                }}>
-              <img alt="" src={song.album.images[0].url} width="50" />
-              <List key={song.id}>
-                {`${song.name} - ${song.artists[0].name}`}
-              </List>
-              <AddButton />
-            </SongContainer>
-          ))}
-        </SearchResult> : <></>
+				<ScrollContainer>
+					<SearchResult>
+						{songs.map((song) => (
+							<SongContainer onClick={(e) => {
+								setSearchEntry('');
+								addToQueue(e, song);
+							}}>
+								<img alt="" src={song.album.images[0].url} width="50" style={{borderRadius: "4px"}}/>
+								<List key={song.id}>
+									<SongDetail>
+										<SongName>{song.name}</SongName>
+										<Artist>{song.artists[0].name}</Artist>
+									</SongDetail>
+								</List>
+								<AddButton />
+							</SongContainer>
+						))}
+					</SearchResult>
+				</ScrollContainer> : <></>
         }
       </SearchForm>
     </Container>
@@ -90,49 +95,54 @@ const Container = styled.div`
 `;
 
 const SearchForm = styled.form`
-  width: 100%;
-  height: 36px;
   display: flex;
+	flex-direction: column;
   position: relative;
   flex-grow: 1;
-  background-color: #D9D9D9;
-  width: 100%;
-  border-radius: 5px;
+`;
+
+const InputWrapper = styled.div`
+  display: flex;
+	width: 500px;
+	height: 50px;
+	background-color: white;
+	border-radius: 10px;
+	flex-direction: row;
+	align-items: center;
+	padding: 20px;
 `;
 
 const Input = styled.input`
-  width: 100%;
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 0 8px 15px;
-  color: #022B3A;
-  background-color: #D9D9D9;
-  font-size: 18px;
+	flex: 1;
+	height: 40px;
+	border: none;
+	outline: none;
+	font-size: 18px;
+	padding-left: 10px;
 `;
 
-const SearchIcon = styled.div`
+const ScrollContainer = styled.div`
+  width: 100%;
+  height: 396px;
+  position: relative;
   display: flex;
-  font-size: 20px;
-  justify-content: center;
   align-items: center;
-  padding: 0 15px;
-  border-radius: 5px;
-  color: #022B3A;
-  cursor: pointer;
 `;
 
 const SearchResult = styled.ul`
-  position: absolute;
-  top: 36px;
-  left: 0;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  border-radius: 3px;
-  color: white;
+  width: 500px;
+  height: 100%;
+	border-radius: 3px;
+  color: #CEE5F2;
   background-color: #333;
+	white-space: nowrap;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  align-items: center;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const SongContainer = styled.div`
@@ -141,14 +151,14 @@ const SongContainer = styled.div`
   align-items: center;
   flex-direction: row;
   padding-bottom: 2px;
-  padding-left: 6px;
+  padding-left: 10px;
   padding-top: 6px;
   border-radius: 20px;
   border-left: 1px solid #70CAD1;
   border-right: 1px solid #70CAD1;
   border-bottom: 1px solid #70CAD1;
   &:hover {
-    color: #FFF;
+    color: #022B3A;
     background-color: #70CAD1;
     cursor: pointer;
   };
@@ -163,6 +173,25 @@ const List = styled.li`
   height: 90px;
   border-radius: 3px;
   font-size: 17px;
+`;
+
+const SongDetail = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  alignItems: stretch;
+`;
+
+const SongName = styled.div`
+  display: flex;
+  font-size: 1em;
+  width: 350px;
+  overflow: hidden;
+`;
+
+const Artist = styled.div`
+ display: flex;
+ font-size: x-small;
 `;
 
 const AddButton = styled(FiPlusCircle)`

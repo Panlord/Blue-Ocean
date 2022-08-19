@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Queue from '../Queue/Queue.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
-import Player from '../player.jsx';
+import AdminPlayer from '../AdminPlayer.jsx';
 import Chat from '../Chat/Chat.jsx';
 import logo from "../../../dist/SONAR_logo.png";
 
@@ -16,16 +16,28 @@ const generateRandomString = (length) => {
   return text;
 };
 
+<<<<<<< HEAD
 export default function AdminRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id }) {
   const [queue, setQueue] = useState([]);
+=======
+export default function AdminRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id, roomID, setRoomID }) {
+
+  const [currentUri, setCurrentUri] = useState('');
+  const [queue, setQueue] = useState([]);
+
+  // On initial component mounting, generate a random room ID and set it
+  useEffect(() => {
+    setRoomID(generateRandomString(4));
+  }, []);
+>>>>>>> main
 
   return (
     <RoomContainer className="roomContainer">
-      <Queue queue={queue} token={token} username={username} />
+      <Queue queue={queue} token={token} currentUri={currentUri} setQueue={setQueue} username={username} />
       <div className="centerStuff">
-        <SearchBar setQueue={setQueue} token={token} deviceID={device_id} />
-        <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} />
-        <RoomCodeLink>COPY ROOM LINK</RoomCodeLink>
+        <SearchBar setQueue={setQueue} token={token} deviceID={device_id} roomID={roomID} username={username} />
+        <AdminPlayer roomID={roomID} token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} setCurrentUri={setCurrentUri} />
+        <RoomCodeLink>{`http://localhost:3001/?roomID=${roomID}`}</RoomCodeLink>
       </div>
       <Chat username={username} />
     </RoomContainer>
@@ -38,5 +50,5 @@ const RoomContainer = styled.div`
   justify-content: space-between;
 `;
 const RoomCodeLink = styled.div`
-  background-color: cyan;
+  color: white;
 `;
