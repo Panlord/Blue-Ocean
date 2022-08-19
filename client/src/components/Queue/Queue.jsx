@@ -34,8 +34,8 @@ export default function Queue ({ queue, username, token, currentUri, setQueue })
 }
 
 const Container = styled.div`
-min-width: 270px;
-height: 850px;
+min-width: 16vw;
+height: 90vh;
 border: 1px solid black;
 border-radius: 20px;
 background-color: #0D1317;

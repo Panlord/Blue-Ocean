@@ -140,6 +140,9 @@ const ThumbsUp = styled(FaThumbsUp)`
   width: 15px;
   color: black;
   cursor: pointer;
+  &:hover {
+    color: #b1a7a796;
+  };
 `;
 
 const ThumbsDown = styled(FaThumbsDown)`
@@ -147,4 +150,7 @@ const ThumbsDown = styled(FaThumbsDown)`
   width: 15px;
   color: black;
   cursor: pointer;
+  &:hover {
+    color: #b1a7a796;
+  };
 `;

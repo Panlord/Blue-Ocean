@@ -119,7 +119,7 @@ export default function Chat({ username }) {
 const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 18vw;
+  width: 16vw;
   height: 90vh;
   margin-right: 40px;
   margin-top: 40px;

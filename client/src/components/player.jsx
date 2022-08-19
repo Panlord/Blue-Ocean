@@ -204,7 +204,7 @@ margin-top: 10px;
 
 const Skip = styled.div`
 color: white;
-font-size: 20px;
+font-size: 25px;
 cursor: pointer;
 margin: 7px;
 
@@ -214,7 +214,7 @@ margin: 7px;
 `
 const Save = styled.div`
 color: white;
-font-size: 20px;
+font-size: 25px;
 cursor: pointer;
 margin: 7px;
 
@@ -266,7 +266,6 @@ height: 100%;
 `
 
 const MainWrapper = styled.div`
-padding-top: 45px;
 align-items: center;
 display: flex;
 flex-direction: column;
@@ -279,12 +278,11 @@ width: 80%;
 const SongImg = styled.img`
 border: 2px solid black;
 border-radius: 10px;
-width: 400px;
-height: 400px;
+width: 25vw;
 `
 
 const SongInfo = styled.div`
-font-size: 25px;
+font-size: 30px;
 margin: 20px;
 text-align: center;
 `
