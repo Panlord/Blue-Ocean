@@ -139,12 +139,11 @@ const MessageForm = styled.form`
   position: relative;
   max-width: 70vw;
 `;
-const MessageTextarea = styled.textarea`
+const MessageInput = styled.input`
   background: #D9D9D9;
   border-radius: 10px;
   color: black;
   font-size: 24px;
-  resize: none;
   flex-grow: 1;
   overflow: auto;
 `;
