@@ -15,8 +15,10 @@ export default function UserRoom({ token, refreshToken, username, setUsername, d
 
   useEffect(()=> {
 
-    axios.get('http://localhost:3001/room', {params : { roomID : 0}})
+    axios.get('http://localhost:3001/room', {params : { roomID : roomID }})
     .then((res)=>{
+      console.log(res);
+      setQueue(res.data.queueData);
       axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${deviceID.device_id}&uri=${res.data.currentSong.uri}`, null, { headers: { Authorization: `Bearer ${token}` } })
       .then(()=>{
         for (let i = 0; i < res.data.queueData.length; i++) {
@@ -28,7 +30,6 @@ export default function UserRoom({ token, refreshToken, username, setUsername, d
         .catch((err) => console.log(err))
         }
       })
-      setQueue(res.data.queueData);
     })
     .catch((err)=>console.log(err))
     //{ queueData, currentSong, songPosition, paused}
@@ -42,7 +43,7 @@ export default function UserRoom({ token, refreshToken, username, setUsername, d
     <RoomContainer className="roomContainer">
       <Queue queue={queue} token={token} currentUri={currentUri} setQueue={setQueue} username={username} />
       <div className="centerStuff">
-        <SearchBar setQueue={setQueue} token={token} deviceID={device_id} />
+        <SearchBar setQueue={setQueue} token={token} deviceID={device_id} username={username} roomID={roomID} />
         <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} currentUri={currentUri} setCurrentUri={setCurrentUri} />
       </div>
       <Chat username={username} />

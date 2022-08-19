@@ -29,7 +29,7 @@ export default function AdminRoom({ token, refreshToken, username, setUsername, 
     <RoomContainer className="roomContainer">
       <Queue queue={queue} token={token} username={username} />
       <div className="centerStuff">
-        <SearchBar setQueue={setQueue} token={token} deviceID={device_id} />
+        <SearchBar setQueue={setQueue} token={token} deviceID={device_id} roomID={roomID} username={username} />
         <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} setCurrentUri={setCurrentUri} />
         <RoomCodeLink>COPY ROOM LINK</RoomCodeLink>
       </div>

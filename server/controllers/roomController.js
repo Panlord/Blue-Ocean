@@ -24,10 +24,10 @@ const post = (req, res) => {
 
 const get = async(req, res) => {
   try {
-    const queueQuery = await Track.find({ roomID: req.query.params.roomID });
-    const currentSongQuery = await Room.find({ roomID: req.query.params.roomID }, 'playingSong');
-    const positionQuery = await Room.find({ roomID: req.query.params.roomID }, 'position');
-    const pausedQuery = await Room.find({ roomID: req.query.params.roomID }, 'paused');
+    const queueQuery = await Track.find({ roomID: req.query.roomID });
+    const currentSongQuery = await Room.find({ roomID: req.query.roomID }, 'playingSong');
+    const positionQuery = await Room.find({ roomID: req.query.roomID }, 'position');
+    const pausedQuery = await Room.find({ roomID: req.query.roomID }, 'paused');
     res.send({ queueData: queueQuery, currentSong: currentSongQuery, songPosition: positionQuery, paused: pausedQuery });
   } catch(err) {
     console.log('error getting queue and room data: ', err);
