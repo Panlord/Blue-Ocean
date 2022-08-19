@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FiPlusCircle } from 'react-icons/fi';
 import axios from 'axios';
 
-export default function SearchBar({ setQueue, username, token, deviceID }) {
+export default function SearchBar({ setQueue, username, token, deviceID, roomID }) {
   const [searchEntry, setSearchEntry] = useState('');
   const [songs, setSongs] = useState([]);
 
@@ -38,9 +38,10 @@ export default function SearchBar({ setQueue, username, token, deviceID }) {
       songImg: song.album.images[0].url,
       artist: song.album.artists[0].name,
       uri: song.uri,
+      roomID: roomID,
     };
     setQueue((prev) => [...prev, queueData]);
-    console.log('---deviceID---', deviceID.device_id)
+    console.log('---deviceID---', deviceID.device_id);
     axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${deviceID.device_id}&uri=${song.uri}`, null, { headers: { Authorization: `Bearer ${token}` } })
       .then((response) => {
         console.log('post to player response ', response)

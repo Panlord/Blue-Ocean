@@ -13,13 +13,14 @@ const Room = require('../db/room.js');
 
 //console.log(controller, 'controllers');
 router.get('/auth/login', controller.authentication.get);
-router.get('/auth/callback', controller.authenticationCallback.get);
+router.get('/auth/callback', controller.authentication.callbackGet);
+router.get('/auth/join/callback', controller.nonHostAuthenticationCallback.get); // Route for authentication of a non-host user
 router.get('/auth/token', controller.getToken.get);
 router.put('/room', controller.roomController.put);
 router.post('/room', controller.roomController.post);
 router.get('/room', controller.roomController.get);
 router.post('/addToQueue', (req, res) => {
-  // console.log('req.body',req.body);
+  console.log('req.body',req.body);
   Track.create(req.body)
     .then((response) => {
       console.log('req.body: ', req.body);
@@ -48,13 +49,17 @@ router.put('/action/:uri', async (req, res) => {
       findTrack[0].dislikes.push(req.body.user);
     }
     await Track.findOneAndUpdate({uri: req.body.uri}, findTrack[0]);
-    return res.status(200).send("Likes/dislikes updated");
+    return res.status(200).send({
+      likes: findTrack[0].likes.length,
+      dislikes: findTrack[0].dislikes.length
+    });
 
   } catch (err) {
     console.log("error liking track", err);
     res.status(500).send("Error");
   }
 });
+
 
 router.get('/findLikes', async (req, res) => {
   try {
@@ -69,6 +74,19 @@ router.get('/findLikes', async (req, res) => {
     console.log("error getting like count", err);
     res.status(500).send(err);
   }
+});
+
+router.delete('/deleteSong', (req, res) => {
+  console.log('req.body', req);
+  Track.findOneAndDelete(req.body)
+    .then((response) => {
+      console.log('delete req.body: ', req.body);
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      console.log('error deleting track', err);
+      res.status(400).send("error when deleting track");
+    });
 });
 
 module.exports = router;
