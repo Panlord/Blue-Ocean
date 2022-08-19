@@ -135,12 +135,13 @@ const Messages = styled.ul`
   flex-direction: column-reverse;
   overflow: auto;
 `;
-const Message = styled.li`
+const Message = styled.div`
   background: #D9D9D9;
   border-radius: 10px;
   color: black;
   font-size: 24px;
   margin: 4px 8px 4px 8px;
+  overflow-wrap: break-word;
 `;
 const TimeStamp = styled.li`
   font-size: 14px;

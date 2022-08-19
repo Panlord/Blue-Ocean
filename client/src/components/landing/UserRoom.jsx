@@ -29,7 +29,6 @@ export default function UserRoom({ token, refreshToken, username, setUsername, d
         }
       })
       setQueue(res.data.queueData);
-
     })
     .catch((err)=>console.log(err))
     //{ queueData, currentSong, songPosition, paused}
@@ -41,7 +40,7 @@ export default function UserRoom({ token, refreshToken, username, setUsername, d
 
   return (
     <RoomContainer className="roomContainer">
-      <Queue queue={queue} token={token} currentUri={currentUri} setQueue={setQueue} user={username} />
+      <Queue queue={queue} token={token} currentUri={currentUri} setQueue={setQueue} username={username} />
       <div className="centerStuff">
         <SearchBar setQueue={setQueue} token={token} deviceID={device_id} />
         <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} currentUri={currentUri} setCurrentUri={setCurrentUri} />

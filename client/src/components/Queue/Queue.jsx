@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Track from './Track.jsx';
 import axios from "axios";
 
-export default function Queue ({ queue, user, token, currentUri, setQueue }) {
+export default function Queue ({ queue, username, token, currentUri, setQueue }) {
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function Queue ({ queue, user, token, currentUri, setQueue }) {
     <Container className='Queue'>
       <QueueContainer>
         {queue.map((item, index) => (
-          <Track track={item} key={index} user={user} token={token} />
+          <Track track={item} key={index} username={username} token={token} />
         ))}
       </QueueContainer>
     </Container>
@@ -36,9 +36,10 @@ export default function Queue ({ queue, user, token, currentUri, setQueue }) {
 const Container = styled.div`
 width: 270px;
 height: 900px;
-border: 1px solid;
+border: 1px solid black;
 border-radius: 20px;
 background-color: #3A4965;
+// overflow: scroll;
 `
 
 const QueueContainer = styled.div`

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { FaThumbsUp, FaThumbsDown } from "react-icons/fa";
 
-export default function Track({ track, user, token }) {
+export default function Track({ track, username, token }) {
   const [likeCount, setLikeCount] = useState("");
   const [dislikeCount, setDislikeCount] = useState("");
   const [likeStatus, setLikeStatus] = useState(false);
@@ -63,7 +63,7 @@ export default function Track({ track, user, token }) {
               <Count>{dislikeCount}</Count>
             </LikesContainer>
           </ThumbsContainer>
-          <AddedBy>Added By: {user}</AddedBy>
+          <AddedBy>Added By: {username}</AddedBy>
         </InnerContainer>
       </SongContainer>
     </div>
@@ -96,6 +96,7 @@ const Count = styled.div`
   width: 10px;
   border: 1px solid black;
   border-radius: 50%;
+  color: black;
 `;
 
 const SongContainer = styled.div`
@@ -124,7 +125,7 @@ const SongImage = styled.img`
   width: 60px;
   margin: 10px;
   border-radius: 10px;
-  border: 1px solid blac
+  border: 2px solid black
 `;
 
 const ThumbsUp = styled(FaThumbsUp)`

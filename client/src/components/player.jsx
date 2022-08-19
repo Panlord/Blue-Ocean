@@ -100,7 +100,7 @@ function WebPlayback(props) {
             }));
 
             player.connect();
-
+            // Player connected and initialized; store room state in database using POST
     };
   }, []);
 
