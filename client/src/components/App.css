@@ -159,6 +159,7 @@ img { background: transparent; }
   -ms-user-select: none;
   user-select: none;
   cursor: default;
+  animation: neon 1.5s ease-in-out infinite alternate;
 }
 
 #load div {
@@ -174,7 +175,7 @@ img { background: transparent; }
   -o-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
   -webkit-transform: rotate(180deg);
-  color: #70CAD1;
+  color: #fff;
 }
 
 #load div:nth-child(2) {
@@ -318,4 +319,15 @@ img { background: transparent; }
 		transform: rotate(-180deg);
 		opacity: 0;
 	}
+}
+
+@keyframes neon {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 40px #70CAD1,
+      0 0 70px #70CAD1;
+  }
+  to {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #70CAD1,
+      0 0 35px #70CAD1;
+  }
 }
