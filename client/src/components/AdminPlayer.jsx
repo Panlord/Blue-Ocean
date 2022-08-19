@@ -108,7 +108,15 @@ function WebPlayback(props) {
     return (
       <div className="container">
         <div className="main-wrapper">
-          <b> Loading.... </b>
+          <div id="load">
+            <div>G</div>
+            <div>N</div>
+            <div>I</div>
+            <div>D</div>
+            <div>A</div>
+            <div>O</div>
+            <div>L</div>
+          </div>
         </div>
       </div>
     );
