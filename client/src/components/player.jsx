@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from "styled-components";
+import { IoIosPause } from "react-icons/io";
+import { BsPlayFill } from "react-icons/bs";
 
 const track = {
   name: '',
@@ -167,29 +169,89 @@ function WebPlayback(props) {
   }
 
   return (
-    <div className="container">
-      <div className="main-wrapper">
-        <div>Added By: {user}
-        <img src={current_track.album.images[0].url} className="now-playing__cover" alt="" />
-        </div>
-        <div className="now-playing__side">
-          <div className="now-playing__name">{current_track.name}</div>
-          <div className="now-playing__artist">{current_track.artists[0].name}</div>
-          {/* <button className="btn-spotify" type="button" onClick={() => { player.previousTrack(); }}>
-            &lt;&lt;
-          </button> */}
-          <button className="btn-spotify" type="button" onClick={() => { handleTogglePlay(is_paused); }}> {/* this used to be player.togglePlay(); */}
-            { is_paused ? 'PLAY' : 'PAUSE' }
-          </button>
-          <button className="btn-spotify" type="button" onClick={() => { handleSkip(); }}> {/* this used to be player.nextTrack() */}
-            &gt;&gt;
-          </button>
-        </div>
-      </div>
-    </div>
+    <Container>
+      <MainWrapper>
+        <SongImg src={current_track.album.images[0].url} />
+          <SongInfo>{current_track.artists[0].name} - {current_track.name}</SongInfo>
+          <AddedBy>added by {user}</AddedBy>
+          <div>
+          { is_paused ? <Play onClick={() => { handleTogglePlay(is_paused); }}/> : <Pause onClick={() => { handleTogglePlay(is_paused); }}/>}
+          <Skip onClick={() => { handleSkip(); }}>Skip</Skip>
+          </div>
+      </MainWrapper>
+    </Container>
   );
 }
 
+const ButtonsContainer = styled.div`
+display: flex;
+`
 
+const Skip = styled.div`
+color: white;
+font-size: 20px;
+cursor: pointer;
+margin: 7px;
+`
+
+const Pause = styled(IoIosPause)`
+border: 1px solid black;
+border-radius: 50%;
+height: 50px;
+width: 50px;
+padding: 5px;
+color: black;
+background-color: #D9D9D9;
+margin: 10px;
+cursor: pointer;
+`
+
+const Play = styled(BsPlayFill)`
+border: 1px solid black;
+border-radius: 50%;
+height: 50px;
+width: 50px;
+padding-left: 3px;
+color: black;
+background-color: #D9D9D9;
+margin: 10px;
+cursor: pointer;
+`
+
+
+const Container = styled.div`
+align-items: center;
+display: flex;
+justify-content: center;
+height: 100%;
+`
+
+const MainWrapper = styled.div`
+padding-top: 45px;
+align-items: center;
+display: flex;
+flex-direction: column;
+height: 100%;
+margin: 0 auto;
+justify-content: center;
+width: 80%;
+`
+
+const SongImg = styled.img`
+border: 2px solid black;
+border-radius: 10px;
+width: 400px;
+height: 400px;
+`
+
+const SongInfo = styled.div`
+font-size: 25px;
+margin: 20px;
+text-align: center;
+`
+
+const AddedBy = styled.div`
+font-size: 20px;
+`
 
 export default WebPlayback;

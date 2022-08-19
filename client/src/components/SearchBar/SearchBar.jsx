@@ -86,6 +86,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 42px 40px 0px 40px;
 `;
 
 const SearchForm = styled.form`
