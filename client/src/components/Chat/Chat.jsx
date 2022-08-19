@@ -43,13 +43,15 @@ export default function Chat({ username }) {
 
     socket.on('chat message', (msg) => {
       const newMessage = `${msg.name}: ${msg.msg}`;
-      setListOfMessages([...listOfMessages, newMessage]);
+      const timeStamp = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+      setListOfMessages([...listOfMessages, {message: newMessage, timeStamp}]);
     });
 
     socket.on('user-connected', (name) => {
       if (name !== '') {
         const msg = `${name} is connected`;
-        setListOfMessages([...listOfMessages, msg]);
+        const timeStamp = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+        setListOfMessages([...listOfMessages, {message: msg, timeStamp}]);
       }
     });
 
@@ -62,12 +64,19 @@ export default function Chat({ username }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     if (message === '') {
       return;
     }
     socket.emit('chat message', message);
     console.log(username, name);
     setMessage('');
+  };
+
+  function onKeyDown(event) {
+    if (event.keyCode === 13) {
+      handleSubmit(event);
+    }
   };
 
   return (
@@ -80,13 +89,20 @@ export default function Chat({ username }) {
       <Bar></Bar>
       <Messages id="messages">
         <div>
-          {listOfMessages.map((msg, index) => <Message key={index}>{msg}</Message>)}
+          {listOfMessages.map((msg, index) => {
+            return (
+              <div style={{display: 'flex'}}>
+                <Message key={index}>{msg.message}</Message>
+                <TimeStamp>{msg.timeStamp}</TimeStamp>
+              </div>
+            )
+            })}
         </div>
       </Messages>
       <MessageForm id="form" onSubmit={(event) => { handleSubmit(event); }}>
         <MessageInput id="input" type="text" value={message} placeholder="Send a message" autoComplete="off" onChange={(event) => { setMessage(event.target.value); }} />
         <SendButtonWrapper>
-          <BsFillArrowUpCircleFill onClick={(event) => { handleSubmit(event); }} />
+          <BsFillArrowUpCircleFill size={40} onClick={(event) => { handleSubmit(event); }} />
         </SendButtonWrapper>
       </MessageForm>
     </ChatContainer>
@@ -112,12 +128,16 @@ const Messages = styled.ul`
   flex-direction: column-reverse;
   overflow: auto;
 `;
-const Message = styled.li`
+const Message = styled.div`
   background: #D9D9D9;
   border-radius: 10px;
   color: black;
   font-size: 24px;
   margin: 4px 8px 4px 8px;
+  overflow-wrap: break-word;
+`;
+const TimeStamp = styled.li`
+  font-size: 14px;
 `;
 const MessageForm = styled.form`
   display: flex;
@@ -126,19 +146,26 @@ const MessageForm = styled.form`
   position: relative;
   max-width: 70vw;
 `;
-const MessageInput = styled.input`
+const MessageInput = styled.textarea`
   background: #D9D9D9;
   border-radius: 10px;
   color: black;
   font-size: 24px;
+  resize: none;
   flex-grow: 1;
   overflow: auto;
 `;
-// Perhaps turn this sendbuttonwrapper into inline styling for the BsFillArrowUpCircleFill
+// // Perhaps turn this sendbuttonwrapper into inline styling for the BsFillArrowUpCircleFill
+// const SendButtonWrapper = styled.div`
+//   color: #70CAD1;
+//   position: absolute;
+//   right: 2%;
+// `;
+
 const SendButtonWrapper = styled.div`
   color: #70CAD1;
-  position: absolute;
-  right: 2%;
+  margin-top: 8px;
+  cursor: pointer;
 `;
 
 const UserFace = styled.div`

@@ -9,7 +9,7 @@ const trackSchema = mongoose.Schema({
   uri: String,
   likes: [String],
   dislikes: [String],
-  roomCode: String,
+  roomID: String,
 });
 
 

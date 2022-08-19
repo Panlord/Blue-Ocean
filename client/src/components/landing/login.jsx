@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import logo from "../../../dist/SONAR_logo.png";
+import { useSearchParams } from 'react-router-dom';
 
-function Login() {
+
+function Login({ roomID }) {
+
+  let authLoginRedirect = '/auth/login';
+  if (roomID) {
+    authLoginRedirect = `/auth/login?roomID=${roomID}`;
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -13,7 +21,7 @@ function Login() {
         <h1>HOST A ROOM?</h1>
         <p>play and listen to music with friends</p>
         <div className="login-wrapper">
-          <a className="btn-spotify" href="/auth/login">
+          <a className="btn-spotify" href={authLoginRedirect}>
             Login with Spotify    <i class="fa fa-spotify"></i>
           </a>
         </div>
