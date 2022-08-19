@@ -14,10 +14,10 @@ function Login({ roomID }) {
       <header className="App-header">
         <div className="logo-block">
           <img className="logo" src={logo}></img>
-          <p>sonar version 1.0</p>
+          <p>Sonar v1.0</p>
         </div>
         <h1>HOST A ROOM?</h1>
-        <p>play and listen to music with friends</p>
+        <p>Play and listen to music with friends</p>
         <div className="login-wrapper">
           <a className="btn-spotify" href={authLoginRedirect}>
             Login with Spotify    <i class="fa fa-spotify"></i>

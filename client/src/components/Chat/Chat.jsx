@@ -13,7 +13,7 @@ export default function Chat({ username }) {
   const [message, setMessage] = useState('');
   const [listOfMessages, setListOfMessages] = useState([]);
   const [name, setName] = useState('');
-  const [group, setGroup] = useState(['A', 'B', 'C', 'D', 'E']);
+  //const [group, setGroup] = useState([]);
 
   // need something to get userName from token data
   useEffect(() => {
@@ -81,17 +81,20 @@ export default function Chat({ username }) {
 
   return (
     <ChatContainer>
-      <UserFace id="face">
+      {/* <UserFace id="face">
         <div>{group.map((pic, index) => {
-          return <Face>{pic}</Face>
+          if (pic !== '') {
+            return <Face>{pic}</Face>
+          }
+
         })}</div>
       </UserFace>
-      <Bar></Bar>
+      <Bar></Bar> */}
       <Messages id="messages">
         <div>
           {listOfMessages.map((msg, index) => {
             return (
-              <div style={{display: 'flex'}}>
+              <div style={{display: 'flex', alignItems: 'center'}}>
                 <Message key={index}>{msg.message}</Message>
                 <TimeStamp>{msg.timeStamp}</TimeStamp>
               </div>
@@ -100,7 +103,7 @@ export default function Chat({ username }) {
         </div>
       </Messages>
       <MessageForm id="form" onSubmit={(event) => { handleSubmit(event); }}>
-        <MessageInput id="input" type="text" value={message} placeholder="Send a message" autoComplete="off" onChange={(event) => { setMessage(event.target.value); }} />
+        <MessageInput id="input" type="text" value={message} placeholder="Send a message" autoComplete="off" onChange={(event) => { setMessage(event.target.value); }} onKeyDown={(event) => onKeyDown(event)}/>
         <SendButtonWrapper>
           <BsFillArrowUpCircleFill size={40} onClick={(event) => { handleSubmit(event); }} />
         </SendButtonWrapper>
@@ -134,9 +137,10 @@ const Message = styled.div`
   background: #D9D9D9;
   border-radius: 10px;
   color: black;
-  font-size: 24px;
+  font-size: 20px;
   margin: 4px 8px 4px 8px;
   overflow-wrap: break-word;
+  padding: 4px;
 `;
 const TimeStamp = styled.li`
   font-size: 14px;
@@ -157,12 +161,6 @@ const MessageInput = styled.textarea`
   flex-grow: 1;
   overflow: auto;
 `;
-// // Perhaps turn this sendbuttonwrapper into inline styling for the BsFillArrowUpCircleFill
-// const SendButtonWrapper = styled.div`
-//   color: #70CAD1;
-//   position: absolute;
-//   right: 2%;
-// `;
 
 const SendButtonWrapper = styled.div`
   color: #70CAD1;

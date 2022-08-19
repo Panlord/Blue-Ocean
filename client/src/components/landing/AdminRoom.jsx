@@ -32,7 +32,6 @@ export default function AdminRoom({ token, refreshToken, username, setUsername, 
       <div className="centerStuff">
         <SearchBar setQueue={setQueue} token={token} deviceID={device_id} roomID={roomID} username={username} />
         <AdminPlayer roomID={roomID} token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} setCurrentUri={setCurrentUri} />
-        <RoomCodeLink>{`http://localhost:3001/?roomID=${roomID}`}</RoomCodeLink>
       </div>
       <Chat username={username} />
     </RoomContainer>
@@ -43,7 +42,4 @@ const RoomContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-`;
-const RoomCodeLink = styled.div`
-  color: white;
 `;

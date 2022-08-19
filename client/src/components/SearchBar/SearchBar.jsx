@@ -59,7 +59,7 @@ export default function SearchBar({ setQueue, username, token, deviceID, roomID 
       <SearchForm>
 				<InputWrapper>
 					<i className="fa fa-search" style={{color: "#70CAD1"}}/>
-					<Input type="text" name="search" placeholder="Songs, artists..." value={searchEntry} onChange={searchChange} />
+					<Input type="text" name="search" placeholder="Songs, artists..." value={searchEntry} autoComplete="off" onChange={searchChange} />
 				</InputWrapper>
         {searchEntry.length ?
 				<ScrollContainer>
@@ -97,6 +97,7 @@ const Container = styled.div`
 const SearchForm = styled.form`
   display: flex;
 	flex-direction: column;
+  align-items: center;
   position: relative;
   align-items: center;
   flex-grow: 1;
