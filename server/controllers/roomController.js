@@ -17,6 +17,7 @@ const put = (req, res) => {
 };
 
 const post = (req, res) => {
+  console.log('------>', req.body);
   Room.create(req.body)
     .then(() => res.status(201).send('successfully posted room'))
     .catch((err) => console.log('error posting room data: ', err));

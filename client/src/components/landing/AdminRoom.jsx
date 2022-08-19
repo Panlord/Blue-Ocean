@@ -30,7 +30,7 @@ export default function AdminRoom({ token, refreshToken, username, setUsername, 
       <Queue queue={queue} token={token} username={username} />
       <div className="centerStuff">
         <SearchBar setQueue={setQueue} token={token} deviceID={device_id} roomID={roomID} username={username} />
-        <Player token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} setCurrentUri={setCurrentUri} />
+        <Player roomID={roomID} token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} setCurrentUri={setCurrentUri} />
         <RoomCodeLink>{`http://localhost:3001/?roomID=${roomID}`}</RoomCodeLink>
       </div>
       <Chat username={username} />
