@@ -184,6 +184,7 @@ const SongName = styled.div`
   display: flex;
   font-size: 1em;
   width: 350px;
+  overflow: hidden;
 `;
 
 const Artist = styled.div`
