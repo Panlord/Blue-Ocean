@@ -7,7 +7,7 @@ module.exports = {
       if (err) {
         console.log(err, 'auth error');
       } else {
-        res.redirect(`/?authCode=${req.query.state}`);
+        res.redirect(`/?roomID=${req.query.roomID}&authCode=${req.query.state}`);
       }
     })
   }

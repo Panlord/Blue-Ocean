@@ -8,12 +8,16 @@ const express = require("express");
 const router = express.Router();
 const controller = require('../controllers');
 const Track = require('../db/track.js');
+const Room = require('../db/room.js');
 
 
 //console.log(controller, 'controllers');
 router.get('/auth/login', controller.authentication.get);
 router.get('/auth/callback', controller.authenticationCallback.get);
 router.get('/auth/token', controller.getToken.get);
+router.put('/room', controller.roomController.put);
+router.post('/room', controller.roomController.post);
+router.get('/room', controller.roomController.get);
 router.post('/addToQueue', (req, res) => {
   // console.log('req.body',req.body);
   Track.create(req.body)
