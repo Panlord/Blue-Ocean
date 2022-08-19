@@ -110,98 +110,81 @@ function WebPlayback(props) {
     );
   }
 
-  setTimeout(() => {
-    // Player connected and initialized; store room state in database using POST
-    player.getCurrentState()
-      .then((state) => {
-        console.log('--->', state);
-        let initialRoomData = {
-          roomID: props.roomID,
-          paused: state.paused,
-          position: state.position,
-          playingSong: state.track_window.current_track.uri
-        };
-        return initialRoomData;
-      })
-      .then((initialRoomData) => {
-        return axios.post('/room', initialRoomData);
-      })
-      .catch((error) => {
-        console.log('BANGBANGBANG', error);
-      });
-  }, 500);
+  // // Handler functions to handle what happens when someone (preferably the host) interacts with the player
+  // // Host presses PLAY/PAUSE button on player
+  // const handleTogglePlay = (isPaused) => {
+  //   player.togglePlay()
+  //     // PUT request to update the state of the room (send WebPlaybackState Object's paused, position, and current_track (the uri))
+  //     .then(() => { // Get the current state of the player
+  //       console.log('Toggle play');
+  //       return player.getCurrentState();
+  //     })
+  //     .then((state) => {
+  //       let roomData = {
+  //         roomID: props.roomID,
+  //         paused: state.paused,
+  //         position: state.position,
+  //         playingSong: state.track_window.current_track.uri
+  //       };
+  //       return roomData;
+  //     })
+  //     .then((roomData) => {
+  //       return axios.put('/room', roomData);
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error occurred when attempting to PUT room data to server:', error);
+  //     });
+  // };
 
-  // Handler functions to handle what happens when someone (preferably the host) interacts with the player
-  // Host presses PLAY/PAUSE button on player
-  const handleTogglePlay = (isPaused) => {
-    player.togglePlay()
-      // PUT request to update the state of the room (send WebPlaybackState Object's paused, position, and current_track (the uri))
-      .then(() => { // Get the current state of the player
-        console.log('Toggle play');
-        return player.getCurrentState();
-      })
-      .then((state) => {
-        let roomData = {
-          roomID: props.roomID,
-          paused: state.paused,
-          position: state.position,
-          playingSong: state.track_window.current_track.uri
-        };
-        return roomData;
-      })
-      .then((roomData) => {
-        return axios.put('/room', roomData);
-      })
-      .catch((error) => {
-        console.log('Error occurred when attempting to PUT room data to server:', error);
-      });
-  };
-
-  // Host presses NEXT (or >>) button to skip to next song on player
-  const handleSkip = () => {
-    // Skip to the next track on the player
-    player.nextTrack()
-      // PUT request to update the state of the room (send WebPlaybackState Object's paused, position, current_track (the uri) and the queue data)
-      .then(() => {
-        console.log('Skipped to next track');
-        return player.getCurrentState();
-      })
-      .then((state) => {
-        let roomData = {
-          roomID: props.roomID,
-          paused: state.paused,
-          position: state.position,
-          playingSong: state.track_window.current_track.uri
-        };
-        return roomData;
-      })
-      .then((roomData) => {
-        return axios.put('/room', roomData);
-      })
-      .catch((error) => {
-        console.log('Error occurred when attempting to PUT room data to server:', error);
-      });
-  };
+  // // Host presses NEXT (or >>) button to skip to next song on player
+  // const handleSkip = () => {
+  //   // Skip to the next track on the player
+  //   player.nextTrack()
+  //     // PUT request to update the state of the room (send WebPlaybackState Object's paused, position, current_track (the uri) and the queue data)
+  //     .then(() => {
+  //       console.log('Skipped to next track');
+  //       return player.getCurrentState();
+  //     })
+  //     .then((state) => {
+  //       let roomData = {
+  //         roomID: props.roomID,
+  //         paused: state.paused,
+  //         position: state.position,
+  //         playingSong: state.track_window.current_track.uri
+  //       };
+  //       return roomData;
+  //     })
+  //     .then((roomData) => {
+  //       return axios.put('/room', roomData);
+  //     })
+  //     .catch((error) => {
+  //       console.log('Error occurred when attempting to PUT room data to server:', error);
+  //     });
+  // };
 
   setInterval(() => {
-    console.log('2.5 sec room state update!');
-    player.getCurrentState()
-      .then((state) => {
-        let roomData = {
-          roomID: props.roomID,
-          paused: state.paused,
-          position: state.position,
-          playingSong: state.track_window.current_track.uri
-        };
-        return roomData;
-      })
+    console.log('5 sec room state update!')
+    axios.get('/room', { params: {roomID: props.roomID} })
       .then((roomData) => {
-        return axios.put('/room', roomData);
+        console.log('look AT THIS', roomData);
+        if (roomData.data.paused.paused) {
+          player.pause();
+        } else {
+          player.resume();
+        }
+        console.log('DAMN DUDE', device_id);
+        axios.post(`https://api.spotify.com/v1/me/player/queue?device_id=${device_id.device_id}&uri=${roomData.data.currentSong.playingSong}`, null, { headers: { Authorization: `Bearer ${props.token}` } })
+          .then(() => {
+            player.seek(roomData.data.songPosition.position);
+          })
+          .catch((error) => {
+            console.log('BAD POST MAN', error);
+          })
       })
       .catch((error) => {
-        console.log('Error occurred when attempting to PUT room data to server:', error);
-      });
-  }, 2500);
+        console.log('error in gets', error);
+      })
+  }, 5000);
 
   return (
     <div className="container">
@@ -215,12 +198,12 @@ function WebPlayback(props) {
           {/* <button className="btn-spotify" type="button" onClick={() => { player.previousTrack(); }}>
             &lt;&lt;
           </button> */}
-          <button className="btn-spotify" type="button" onClick={() => { handleTogglePlay(is_paused); }}> {/* this used to be player.togglePlay(); */}
-            { is_paused ? 'PLAY' : 'PAUSE' }
-          </button>
-          <button className="btn-spotify" type="button" onClick={() => { handleSkip(); }}> {/* this used to be player.nextTrack() */}
-            &gt;&gt;
-          </button>
+          {/* <button className="btn-spotify" type="button" onClick={() => { handleTogglePlay(is_paused); }}> this used to be player.togglePlay(); */}
+            {/* { is_paused ? 'PLAY' : 'PAUSE' }
+          </button> */}
+          {/* <button className="btn-spotify" type="button" onClick={() => { handleSkip(); }}> this used to be player.nextTrack() */}
+            {/* &gt;&gt;
+          </button> */}
         </div>
       </div>
     </div>

@@ -19,7 +19,6 @@ const put = (req, res) => {
 };
 
 const post = (req, res) => {
-  console.log('------>', req.body);
   Room.create(req.body)
     .then(() => res.status(201).send('successfully posted room'))
     .catch((err) => console.log('error posting room data: ', err));
@@ -28,9 +27,9 @@ const post = (req, res) => {
 const get = async(req, res) => {
   try {
     const queueQuery = await Track.find({ roomID: req.query.roomID });
-    const currentSongQuery = await Room.find({ roomID: req.query.roomID }, 'playingSong');
-    const positionQuery = await Room.find({ roomID: req.query.roomID }, 'position');
-    const pausedQuery = await Room.find({ roomID: req.query.roomID }, 'paused');
+    const currentSongQuery = await Room.findOne({ roomID: req.query.roomID }, 'playingSong');
+    const positionQuery = await Room.findOne({ roomID: req.query.roomID }, 'position');
+    const pausedQuery = await Room.findOne({ roomID: req.query.roomID }, 'paused');
     res.send({ queueData: queueQuery, currentSong: currentSongQuery, songPosition: positionQuery, paused: pausedQuery });
   } catch(err) {
     console.log('error getting queue and room data: ', err);

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Queue from '../Queue/Queue.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
-import Player from '../player.jsx';
+import AdminPlayer from '../AdminPlayer.jsx';
 import Chat from '../Chat/Chat.jsx';
 
 const generateRandomString = (length) => {
@@ -27,10 +27,10 @@ export default function AdminRoom({ token, refreshToken, username, setUsername, 
 
   return (
     <RoomContainer className="roomContainer">
-      <Queue queue={queue} token={token} username={username} />
+      <Queue queue={queue} token={token} currentUri={currentUri} setQueue={setQueue} username={username} />
       <div className="centerStuff">
         <SearchBar setQueue={setQueue} token={token} deviceID={device_id} roomID={roomID} username={username} />
-        <Player roomID={roomID} token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} setCurrentUri={setCurrentUri} />
+        <AdminPlayer roomID={roomID} token={token} refreshToken={refreshToken} setUsername={setUsername} setDevice_id={setDevice_id} setCurrentUri={setCurrentUri} />
         <RoomCodeLink>{`http://localhost:3001/?roomID=${roomID}`}</RoomCodeLink>
       </div>
       <Chat username={username} />
