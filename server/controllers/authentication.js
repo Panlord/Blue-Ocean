@@ -19,6 +19,7 @@ var generateRandomString = function (length) {
 module.exports = {
   get : (req, res) => {
     var scope = "streaming \
+    user-library-modify \
     user-read-email \
     user-read-private \
     playlist-modify-private \

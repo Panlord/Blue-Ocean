@@ -6,6 +6,7 @@ import SearchBar from '../SearchBar/SearchBar.jsx';
 import Player from '../player.jsx';
 import Chat from '../Chat/Chat.jsx';
 import axios from "axios";
+import logo from "../../../dist/SONAR_logo.png";
 
 
 export default function UserRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id, roomID}) {

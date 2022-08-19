@@ -168,23 +168,38 @@ function WebPlayback(props) {
       });
   }
 
+  const saveTrack = (uri) => {
+    let songId = uri.slice(14)
+    console.log('--song ID--: ', songId)
+    console.log('--TOKEN--: ', props.token)
+    axios.put(`https://api.spotify.com/v1/me/tracks?ids=${songId}`, null, { headers: { Authorization: `Bearer ${props.token}` } })
+      .then((response) => {
+        console.log('track saved! ', response)
+      })
+      .catch((err) => console.log('error saving track', err))
+  }
+
   return (
     <Container>
       <MainWrapper>
         <SongImg src={current_track.album.images[0].url} />
           <SongInfo>{current_track.artists[0].name} - {current_track.name}</SongInfo>
           <AddedBy>added by {user}</AddedBy>
-          <div>
+          <ButtonsContainer>
+          <Save onClick={() => {saveTrack(current_track.uri)}}>Save</Save>
           { is_paused ? <Play onClick={() => { handleTogglePlay(is_paused); }}/> : <Pause onClick={() => { handleTogglePlay(is_paused); }}/>}
           <Skip onClick={() => { handleSkip(); }}>Skip</Skip>
-          </div>
+          </ButtonsContainer>
       </MainWrapper>
     </Container>
   );
 }
 
+
 const ButtonsContainer = styled.div`
 display: flex;
+align-items: center;
+margin-top: 10px;
 `
 
 const Skip = styled.div`
@@ -192,6 +207,20 @@ color: white;
 font-size: 20px;
 cursor: pointer;
 margin: 7px;
+
+  &:hover {
+    color: #0D1317;
+  };
+`
+const Save = styled.div`
+color: white;
+font-size: 20px;
+cursor: pointer;
+margin: 7px;
+
+&:hover {
+  color: #0D1317;
+};
 `
 
 const Pause = styled(IoIosPause)`
@@ -200,10 +229,15 @@ border-radius: 50%;
 height: 50px;
 width: 50px;
 padding: 5px;
-color: black;
+color: #0D1317;
 background-color: #D9D9D9;
 margin: 10px;
 cursor: pointer;
+
+&:hover {
+  color: #D9D9D9;
+  background-color: #0D1317;
+};
 `
 
 const Play = styled(BsPlayFill)`
@@ -212,10 +246,15 @@ border-radius: 50%;
 height: 50px;
 width: 50px;
 padding-left: 3px;
-color: black;
+color: #0D1317;
 background-color: #D9D9D9;
 margin: 10px;
 cursor: pointer;
+
+&:hover {
+  color: #D9D9D9;
+  background-color: #0D1317;
+};
 `
 
 

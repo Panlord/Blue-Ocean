@@ -51,8 +51,8 @@ export default function Track({ track, username, token }) {
       <SongContainer>
         <SongImage src={track.songImg} />
         <InnerContainer>
-          <ArtistName>{track.artist}</ArtistName>
           <SongName>{track.songName}</SongName>
+          <ArtistName>{track.artist}</ArtistName>
           <BottomContainer>
           <AddedBy>Added By: {username}</AddedBy>
           <ThumbsContainer>
@@ -117,14 +117,14 @@ const SongContainer = styled.div`
 const InnerContainer = styled.div`
   margin-top: 10px;
 `;
-const ArtistName = styled.div`
+const SongName = styled.div`
 color: white;
 font-size: 20px;
 `;
 
-const SongName = styled.div`
+const ArtistName = styled.div`
 font-size: 14px;
-color: white;
+color: #b1a7a796;
 `;
 
 const SongImage = styled.img`
