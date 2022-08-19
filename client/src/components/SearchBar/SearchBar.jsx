@@ -128,6 +128,7 @@ const ScrollContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  z-index: 10000;
 `;
 
 const SearchResult = styled.ul`
@@ -136,7 +137,7 @@ const SearchResult = styled.ul`
   margin: auto;
 	border-radius: 3px;
   color: #CEE5F2;
-  background-color: #022B3A;
+  background-color: rgba(2,43,58,0.8);
 	white-space: nowrap;
   overflow-x: scroll;
   scrollbar-width: none;
