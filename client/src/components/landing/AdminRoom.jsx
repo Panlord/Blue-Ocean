@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Queue from '../Queue/Queue.jsx';
 import SearchBar from '../SearchBar/SearchBar.jsx';
@@ -15,10 +15,15 @@ const generateRandomString = (length) => {
   return text;
 };
 
-export default function AdminRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id }) {
+export default function AdminRoom({ token, refreshToken, username, setUsername, device_id, setDevice_id, roomID, setRoomID }) {
 
   const [currentUri, setCurrentUri] = useState('');
   const [queue, setQueue] = useState([]);
+
+  // On initial component mounting, generate a random room ID and set it
+  useEffect(() => {
+    setRoomID(generateRandomString(4));
+  }, []);
 
   return (
     <RoomContainer className="roomContainer">

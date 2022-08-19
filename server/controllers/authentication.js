@@ -4,8 +4,6 @@ var models = require ('./../models');
 var spotify_client_id = process.env.SPOTIFY_CLIENT_ID;
 var spotify_client_secret = process.env.SPOTIFY_CLIENT_SECRET;
 
-//console.log( process.env.SPOTIFY_CLIENT_ID,process.env.SPOTIFY_CLIENT_SECRET, 'secrets')
-
 var generateRandomString = function (length) {
   var text = '';
   var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -53,7 +51,6 @@ module.exports = {
       if (err) {
         console.log(err, 'auth error');
       } else {
-        console.log('ALDHBALWDBLJAHBDW ------>', roomID);
         if (roomID.length > 0) {
           res.redirect(`/?roomID=${roomID}&authCode=${req.query.state}`);
           roomID = '';

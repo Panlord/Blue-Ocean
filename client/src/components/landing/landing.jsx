@@ -33,7 +33,7 @@ function Landing({ username, setUsername, device_id, setDevice_id }) {
 
   return (
     <div>
-      { (token === '') ? <Login roomID={roomID} /> : (window.location.href.indexOf('roomID=') !== -1 ? <UserRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} roomID={roomID}/> : <AdminRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id}  />) }
+      { (token === '') ? <Login roomID={roomID} /> : (window.location.href.indexOf('roomID=') !== -1 ? <UserRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} roomID={roomID}/> : <AdminRoom token={token} refreshToken={refreshToken} username={username} setUsername={setUsername} setDevice_id={setDevice_id} device_id={device_id} setRoomID={setRoomID} roomID={roomID} />) }
     </div>
   );
 }
